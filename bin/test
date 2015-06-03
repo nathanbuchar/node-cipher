@@ -1,0 +1,11 @@
+# link locally so that `npm run` works correctly
+npm link ../config-cipher
+
+# encrypt using the password `bosco`
+echo "bosco" | npm run encrypt
+
+# decrypt using the password `bosco`
+echo "bosco" | npm run decrypt
+
+# diff the two files, and exit with its length
+comm -3 test/config.json test/config.copy.json | wc -c | exit
