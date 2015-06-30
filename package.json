@@ -1,6 +1,6 @@
 {
   "name": "config-cipher",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Encrypt and decrypt your sensitive config files.",
   "main": "index.js",
   "repository": {
@@ -20,9 +20,6 @@
   "bin": {
     "encrypt": "./lib/encrypt.js",
     "decrypt": "./lib/decrypt.js"
-  },
-  "engines": {
-    "node": ">=0.10.0"
   },
   "dependencies": {
     "inquirer": "^0.8.5"
