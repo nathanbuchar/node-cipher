@@ -63,7 +63,7 @@ Encrypt or decrypt sensitive files to allow use in public source control.
     ```
     // Procfile
 
-    web: echo $CONFIG_KEY | nodecipher decrypt -i .env.cast5 -o .env; npm start;
+    web: nodecipher decrypt -i .env.cast5 -o .env -k $CONFIG_KEY; npm start;
     ```
 
 
