@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+
+var path = require('path');
+var yargs = require('yargs');
+
+var cipher = require('../lib/cipher');
+var defaults = require('../lib/defaults');
+
+/**
+ * Command line interface.
+ */
+var argv = yargs
+  .usage('Usage: $0 <command> -i [string] -o [string] -k [string] -a [string]')
+  .command('encrypt', 'Encrypt the given input file')
+  .command('decrypt', 'Decrypt the given input file')
+  .demand(1)
+  .demand(['i','o'])
+  .describe('i', 'The input filename')
+  .describe('o', 'The output filename')
+  .describe('k', 'The encryption key/password')
+  .describe('a', 'The algorithm to use')
+  .alias('i', 'input')
+  .alias('o', 'output')
+  .alias('k', 'key')
+  .alias('a', 'algorithm')
+  .alias('h', 'help')
+  .default({ a: defaults.algorithm })
+  .help('h')
+  .argv;
+
+/**
+ * Parse source and destination paths so that they are absolute paths relative
+ * to the current working directory.
+ */
+var src = path.join(process.cwd(), argv.input);
+var dest = path.join(process.cwd(), argv.output);
+
+/**
+ * Determine the proper action to perform.
+ */
+switch (argv._[0]) {
+  case 'encrypt':
+    if (argv.key) {
+      cipher.encrypt(src, dest, argv.key, argv.algorithm);
+    } else {
+      cipher.encryptWithPrompt(src, dest, argv.algorithm);
+    }
+    break;
+  case 'decrypt':
+    if (argv.key) {
+      cipher.decrypt(src, dest, argv.key, argv.algorithm);
+    } else {
+      cipher.decryptWithPrompt(src, dest, argv.algorithm);
+    }
+    break;
+}

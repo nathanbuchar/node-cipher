@@ -1,27 +1,25 @@
 {
-  "name": "config-cipher",
-  "version": "0.1.1",
-  "description": "Encrypt and decrypt your sensitive config files.",
+  "name": "node-cipher",
+  "version": "1.0.0",
+  "description": "Encrypt or decrypt sensitive files to allow use in public source control.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nathanbuchar/config-cipher.git"
+    "url": "https://github.com/nathanbuchar/node-cipher.git"
   },
   "author": "Nathan Buchar <hello@nathanbuchar.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nathan/config-cipher/issues"
+    "url": "https://github.com/nathan/node-cipher/issues"
   },
   "scripts": {
-    "test": "./bin/test",
-    "encrypt": "encrypt test/config.json test/config.json.cast5",
-    "decrypt": "decrypt test/config.json.cast5 test/config.copy.json"
+    "test": "./bin/test"
   },
   "bin": {
-    "encrypt": "./lib/encrypt.js",
-    "decrypt": "./lib/decrypt.js"
+    "nodecipher": "./bin/cipher"
   },
   "dependencies": {
-    "inquirer": "^0.8.5"
+    "inquirer": "^0.8.5",
+    "yargs": "^3.21.0"
   }
 }

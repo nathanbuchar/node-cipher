@@ -1,99 +1,81 @@
-# config-cipher
+# node-cipher
 
-Configuration files often contain sensitive information like API keys and passwords and shouldn't be kept in plaintext. This is where config-cipher comes in, it will encrypt your config files so that you can publish them without exposing your sensitive information to the public. To decrypt a file, simply enter the password that you originally encrypted the file with. Based on Jed Schmidt's [config-leaf](https://github.com/jed/config-leaf).
+Encrypt or decrypt sensitive files to allow use in public source control.
 
 
 
-### Setup
+### Install
 
-First, install the package as a project dependency:
-
-```bash
-npm install config-cipher --save
-```
-
-Second, you'll need to edit your `package.json` file and add the `encrypt` and `decrypt` scripts:
-
-```json
-{
-  "scripts": {
-    "encrypt": "encrypt config.json config.json.cast5",
-    "decrypt": "decrypt config.json.cast5 config.json"
-  }
-}
-```
-
-You of course can use any source and destination file name you'd like, just simply follow this pattern when writing your scripts:
-
-```
-[encrypt|decrypt] <source> <destination>
-```
-
-And last, make sure that the file you will be encrypting is added to your `.gitignore` file so that it won't be checked in when pushing to get.
-
-```bash
-echo config.json >> .gitignore
-```
+    npm install -g node-cipher
 
 
 
 ### Usage
 
-For the sake of demonstration, let's assume that we're working on a Node.js project and we need to store some sensitive information such as API keys and passwords in a config file. The problem however is that the repository is accessible to the public, which means that all your sensitive information will be exposed if you check in your config file. file-cipher solves this by creating an encrypted copy of your config file that you can later decrypt with a master password.
 
-To encrypt a config file, simply run
+    $ nodecipher <command> {options}
 
-```bash
-npm run encrypt
+
+#### Commands
+
+|Command|Description|
+|:-----:|:----------|
+|encrypt|Encrypts the given input file.|
+|decrypt|Decrypts the given input file.|
+
+#### Options
+
+|Option|Alias|Type|Description|Required?|Default|
+|:-----:|:---:|:--:|:----------|:-------:|:------|
+|`--input`|`-i`|`string`|The input filename relative to the current working directory.|Yes|`null`|
+|`--output`|`-o`|`string`|The output filename relative to the current working directory. This will be the encrypted version of the input file.|Yes|`null`|
+|`--key`|`-k`|`string`|The key that you will use to encrypt or decrypt your file.|No|(A prompt will appear.)|
+|`--algorithm`|`-a`|`string`|The cipher algorithm to use for your encryption or decryption method. [What are my options?](https://nodejs.org/api/crypto.html#crypto_crypto_getciphers)|No|`cast5-cbc`|
+|`--help`|`-h`|`boolean`|Show the help menu.||||
+
+
+
+### Example Usage
+
+1. Encrypt `config.json` into `config.json.cast5` using the key `bosco` and the default cipher algorithm (`cast5`).
+
+    ```bash
+    $ nodecipher encrypt -i config.json -o config.json.cast5 -k bosco
+    ```
+
+2. Decrypt `config.json.cast5` back into `config.json` using the key `bosco` and the default cipher algorithm (`cast5`).
+
+    ```bash
+    $ nodecipher decrypt -i config.json.cast5 -o config.json -k bosco
+    ```
+
+
+3. Encrypt `classified.js` into `classified.encrypted.js` using the `aes-128-cbc` cipher algorithm and the password prompt.
+
+    ```bash
+    $ nodecipher encrypt -i classified.js -o classified.encrypted.js -a aes-128-cbc
+
+      ? Enter an encryption key: ********
+    ```
+
+4. Decrypt the `.env.cast5` file on Heroku before running the application using the `CONFIG_KEY` environment variable.
+
+    ```
+    // Procfile
+
+    web: echo $CONFIG_KEY | nodecipher decrypt -i .env.cast5 -o .env; npm start;
+    ```
+
+
+
+### Node JS API
+
+```
+nodecipher.encrypt(src, dest, key[, algorithm][, callback])
 ```
 
-Similarly, to decrypt the config file, run
-
-```bash
-npm run decrypt
 ```
-
-You can change the filenames and destinations of your encrypted file in the `package.json` scripts mentioned in [setup](#setup).
-
-
-
-### Making Your Own Binary
-
-Alternatively, instead of using npm scripts, you can create your own custom binary that ties in with the config-cipher binaries. For this example, let's create a binary called `encrypt` in a directory called `bin` at the project root. Inside this file, you can write the exact same script as you would in your `package.json`.
-
-```bash
-#!/usr/bin/env bash
-
-encrypt config.json config.json.cast5
-```
-
-Next, register the file as executable
-
-```bash
-chmod u+x bin/encrypt
-```
-
-Now, to encrypt your config file, simply run
-
-```bash
-bin/encrypt
-```
-
-You can follow the same process for creating a `decrypt` binary as well.
-
-
-
-### Heroku
-You may wish to also test your build on [Heroku](http://heroku.com) and need to decrypt the config file on the fly. To do this, you could [add an environment variable](https://devcenter.heroku.com/articles/config-vars) called `CONFIG_KEY` with the config password, and then in your `Procfile` you can call the `decrypt` binary directly and pass in the config key. For example:
-
-```
-web: echo $CONFIG_KEY | node_modules/.bin/decrypt config.json.cast5 config.json; ...
-```
-
-Or if you've set up your own binaries:
-
-```
-web: echo $CONFIG_KEY | bin/decrypt; ...
+nodecipher.decrypt(src, dest, key[, algorithm][, callback])
 ```
 
 
