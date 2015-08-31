@@ -113,7 +113,7 @@ Decryption schema. Unlike the CLI, a key must be immediately supplied:
 var decrypt = require('node-cipher').decrypt;
 
 // Returns a Promise.
-encrypt(options[, callback]);
+decrypt(options[, callback]);
 ```
 
 #### Options
