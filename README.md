@@ -77,7 +77,7 @@ Options:
 
      --output, -o  The output filename relative to the current working directory. (Required)
 
-        --key, -k  The key that you will use to encrypt or decrypt your file. If this is not
+   --password, -p  The key that you will use to encrypt or decrypt your file. If this is not
                    supplied directly, you will instead be prompted within your command line.
                    If you are decrypting a file, the encryption key must be the same as the
                    one specified during encryption. (Optional)
@@ -102,7 +102,7 @@ Encryption schema. Unlike the CLI, a key must be immediately supplied:
 ```javascript
 var encrypt = require('node-cipher').encrypt;
 
-encrypt(src, dest, key[, algorithm][, callback]);
+encrypt(options[, callback]);
 ```
 
 
@@ -111,8 +111,17 @@ Decryption schema. Unlike the CLI, a key must be immediately supplied:
 ```javascript
 var decrypt = require('node-cipher').decrypt;
 
-decrypt(src, dest, key[, algorithm][, callback]);
+encrypt(options[, callback]);
 ```
+
+#### Options
+
+|Name|Type|Description|Optional|
+|:---|:--:|:----------|:------:|
+|`input`|`string`|The path to the input file relative to the current working directory.|No|
+|`output`|`string`|The path to the output file relative to the current working directory.|No|
+|`password`|`string`|The encryption password.|No|
+|`algorithm`|`string`|The encryption algorithm. Default: `cast5-cbc`|Yes|
 
 
 
@@ -121,13 +130,13 @@ decrypt(src, dest, key[, algorithm][, callback]);
 1. Encrypt `config.json` into `config.json.cast5` using the key `bosco` and the default cipher algorithm (`cast5`).
 
     ```bash
-    $ nodecipher encrypt -i config.json -o config.json.cast5 -k bosco
+    $ nodecipher encrypt -i config.json -o config.json.cast5 -p bosco
     ```
 
 2. Decrypt `config.json.cast5` back into `config.json` using the key `bosco` and the default cipher algorithm (`cast5`).
 
     ```bash
-    $ nodecipher decrypt -i config.json.cast5 -o config.json -k bosco
+    $ nodecipher decrypt -i config.json.cast5 -o config.json -p bosco
     ```
 
 
@@ -144,7 +153,7 @@ decrypt(src, dest, key[, algorithm][, callback]);
     ```
     // Procfile
 
-    web: nodecipher decrypt -i .env.cast5 -o .env -k $CONFIG_KEY; npm start;
+    web: nodecipher decrypt -i .env.cast5 -o .env -p $CONFIG_KEY; npm start;
     ```
 
 
