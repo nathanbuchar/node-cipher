@@ -102,6 +102,7 @@ Encryption schema. Unlike the CLI, a key must be immediately supplied:
 ```javascript
 var encrypt = require('node-cipher').encrypt;
 
+// Returns a Promise.
 encrypt(options[, callback]);
 ```
 
@@ -111,6 +112,7 @@ Decryption schema. Unlike the CLI, a key must be immediately supplied:
 ```javascript
 var decrypt = require('node-cipher').decrypt;
 
+// Returns a Promise.
 encrypt(options[, callback]);
 ```
 
