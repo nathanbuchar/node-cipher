@@ -1,12 +1,12 @@
 # node-cipher
 
-Encrypt or decrypt sensitive files to allow use in public source control. A grown-up and more powerful version of [config-cipher](https://github.com/nathanbuchar/config-cipher). Node-cipher has a much more defined command line interface, as well as a public API for use directly within Node JS apps.
+Encrypt or decrypt sensitive files to allow use in public source control. Node-cipher has a much more defined command line interface, as well as a public API for use directly within Node JS apps. [Find on NPM](https://www.npmjs.com/package/node-cipher)
 
 
 
 ### Example
 
-Let's say we have a file called `config.json` which has some sensitive data in it, like private keys and shit. What happens if we need to transfer these configs between teammembers, but don't want the data within the file to be public within source control? We could send out a mass email with the new config file every time someone makes a change, or we can encrypt the file and add its encrypted counterpart to source control which can later be decrypted on each developer's machine.
+Let's say we have a file called `config.json` which has some sensitive data in it, like private keys and shit. What happens if we need to transfer these configs between team members, but don't want the data within the file to be public within source control? We could send out a mass email with the new config file every time someone makes a change, or we can encrypt the file and add its encrypted counterpart to source control which can later be decrypted on each developer's machine.
 
 Here's our hypothetical `config.json` file.
 
@@ -67,9 +67,9 @@ Usage: nodecipher <command> {options}
 
 Commands:
 
-  encrypt  Encrypts the given input file with the proceeding options.
-  decrypt  Decrypts the given input file with the proceeding options.
-
+  encrypt  Encrypt a given input file.
+  decrypt  Decrypt a given input file.
+  list     List all available cipher options.
 
 Options:
 
@@ -91,13 +91,13 @@ Options:
 
 #### Algorithms
 
-By default, the encryption algorithm is set to `cast5-cbc`, you can instead specify an encryption algorithm by using the `-a` flag. [Here](https://nodejs.org/api/crypto.html#crypto_crypto_getciphers) is how to obtain a list of your cipher algorithm options.
+By default, the encryption algorithm is set to `cast5-cbc`, you can instead specify an encryption algorithm by using the `-a` flag. Use `nodecipher list` to see a list of available cipher algorithms.
 
 
 
 ### Node JS API
 
-Encryption schema. Unlike the CLI, a key must be immediately supplied:
+Encryption schema:
 
 ```javascript
 var encrypt = require('node-cipher').encrypt;
@@ -107,7 +107,7 @@ encrypt(options[, callback]);
 ```
 
 
-Decryption schema. Unlike the CLI, a key must be immediately supplied:
+Decryption schema:
 
 ```javascript
 var decrypt = require('node-cipher').decrypt;
@@ -116,7 +116,17 @@ var decrypt = require('node-cipher').decrypt;
 decrypt(options[, callback]);
 ```
 
-#### Options
+
+List all available cipher algorithms:
+
+```javascript
+var nodecipher = require('node-cipher');
+
+// Returns an array.
+nodecipher.list();
+```
+
+#### Encrypt/Decrypt Options
 
 |Name|Type|Description|Optional|
 |:---|:--:|:----------|:------:|

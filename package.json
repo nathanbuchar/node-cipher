@@ -1,8 +1,15 @@
 {
   "name": "node-cipher",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Encrypt or decrypt sensitive files to allow use in public source control.",
   "main": "index.js",
+  "keywords": [
+    "encrypt",
+    "decrypt",
+    "cipher",
+    "node",
+    "cli"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/nathanbuchar/node-cipher.git"
@@ -13,15 +20,16 @@
     "url": "https://github.com/nathan/node-cipher/issues"
   },
   "scripts": {
-    "test": "./bin/test"
+    "test": "./test/run"
   },
   "bin": {
-    "nodecipher": "./bin/cipher"
+    "nodecipher": "./bin/cipher.js"
   },
   "dependencies": {
     "extend": "^3.0.0",
     "inquirer": "^0.8.5",
     "promise": "^7.0.4",
+    "validator": "^4.0.5",
     "yargs": "^3.21.0"
   }
 }

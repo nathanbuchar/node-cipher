@@ -35,3 +35,13 @@ module.exports.encrypt = function (options, callback) {
 module.exports.decrypt = function (options, callback) {
   return cipher.xcrypt(options, crypto.createDecipher, callback);
 };
+
+/**
+ * Lists all possible crypto ciphers options.
+ *
+ * @returns {Array}
+ * @access public
+ */
+module.exports.list = function () {
+  return crypto.getCiphers();
+};

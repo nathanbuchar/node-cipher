@@ -1,6 +1,11 @@
 # link locally so that `npm run` works correctly
 npm link ../node-cipher
 
+# Test CLI
+nodecipher -h
+nodecipher encrypt -h
+nodecipher decrypt -h
+nodecipher list
 
 # encrypt using the password `test1` and the default algorithm
 nodecipher encrypt -i test/config.json -o test/config.json.cast5 -p test1
