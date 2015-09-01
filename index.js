@@ -11,8 +11,8 @@ var crypto = require('crypto');
 var cipher = require('./lib/cipher');
 
 /**
- * Encrypts the file without a prompt, given that the password is passed in as
- * a function parameter.
+ * Encrypts a file with the provided options. If no password is provided, the
+ * user will be prompted to enter a password via Terminal.
  *
  * @param {Object} options - Cipher options.
  * @param {Function} [callback] - Callback function.
@@ -24,8 +24,8 @@ module.exports.encrypt = function (options, callback) {
 };
 
 /**
- * Decrypts the file without a prompt, given that the password is passed in as
- * a function parameter.
+ * Decrypts a file with the provided options. If no password is provided, the
+ * user will be prompted to enter a password via Terminal.
  *
  * @param {Object} options - Cipher options.
  * @param {Function} [callback] - Callback function.

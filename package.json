@@ -1,6 +1,6 @@
 {
   "name": "node-cipher",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Encrypt or decrypt sensitive files to allow use in public source control.",
   "main": "index.js",
   "keywords": [
@@ -29,7 +29,6 @@
     "extend": "^3.0.0",
     "inquirer": "^0.8.5",
     "promise": "^7.0.4",
-    "validator": "^4.0.5",
     "yargs": "^3.21.0"
   }
 }
