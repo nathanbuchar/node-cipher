@@ -69,7 +69,7 @@ Commands:
 
   encrypt  Encrypt a given file.
   decrypt  Decrypt a given file.
-  list     List all available cipher options.
+     list  List all available cipher options.
 
 Options:
 
@@ -94,60 +94,70 @@ Options:
 
    --password, -p  The key that you will use to encrypt or decrypt your file. If this is not
                    supplied directly, you will instead be prompted within your command line.
-                   If you are decrypting a file, the encryption key must be the same as the
-                   one specified during encryption. (Optional)
+                   If you are decrypting a file, the password must be the same as the one
+                   specified during encryption. (Optional)
 
   --algorithm, -a  The cipher algorithm that you will use to encrypt or decrypt your file. If
                    you are decrypting a file, the encryption method must be the same as the
-                   one specified during encryption. (Optional; Default: cast5-cbc)
+                   one specified during encryption. By default, the encryption algorithm is
+                   set to `cast5-cbc`. Use `nodecipher list` to see a list of available
+                   cipher algorithms. (Optional; Default: cast5-cbc)
+
+       --help, -h  Show the help menu.
 
 ```
-
-#### Algorithms
-
-By default, the encryption algorithm is set to `cast5-cbc`, you can instead specify an encryption algorithm by using the `-a` flag. Use `nodecipher list` to see a list of available cipher algorithms.
 
 
 
 ### Node JS API
 
-Encryption schema:
+Encryption/Decryption API:
 
 ```javascript
-var encrypt = require('node-cipher').encrypt;
+import {encrypt, decrypt, list} from 'node-cipher';
 
-// Returns a Promise.
-encrypt(options[, callback]);
+
+/**
+ * Using callbacks.
+ */
+
+encrypt(options, function () {
+  console.log('File encrypted.');
+});
+
+decrypt(options, function () {
+  console.log('File decrypted.');
+});
+
+
+/**
+ * Using promises.
+ */
+
+encrypt(options).then(function () {
+  console.log('File encrypted.');
+});
+
+decrypt(options).then(function () {
+  console.log('File decrypted.');
+});
+
+
+/**
+ * List all available cipher algorithms.
+ */
+
+ list(); // => ['CAST-cbc', 'aes-128-cbc', ..., 'seed-ofb']
 ```
 
+#### Options
 
-Decryption schema:
-
-```javascript
-var decrypt = require('node-cipher').decrypt;
-
-// Returns a Promise.
-decrypt(options[, callback]);
-```
-
-
-List all available cipher algorithms:
-
-```javascript
-var nodecipher = require('node-cipher');
-
-// Returns an array.
-nodecipher.list();
-```
-
-#### Encrypt/Decrypt Options
-
-|Name|Type|Description|Optional|
+|Name|Type|Description|Required|
 |:---|:--:|:----------|:------:|
-|`input`|`string`|The path to the input file relative to the current working directory.|No|
-|`output`|`string`|The path to the output file relative to the current working directory.|No|
-|`password`|`string`|The encryption password.|No|
-|`algorithm`|`string`|The encryption algorithm. Default: `cast5-cbc`|Yes|
+|`input`|`string`|The input filename relative to the current working directory.|Yes|
+|`output`|`string`|The output filename relative to the current working directory.|Yes|
+|`password`|`string`|The encryption password. Unlike the command line interface, this MUST be specified.|Yes|
+|`algorithm`|`string`|The algorithm to use. Use `nodecipher list` to see a list of available cipher algorithms. Default: `cast5-cbc`|No|
 
 
 
