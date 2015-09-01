@@ -2,7 +2,7 @@
 
 var yargs = require('yargs');
 
-var cipher = require('../lib/cipher');
+var nodecipher = require('../');
 var defaults = require('../lib/defaults');
 
 /**
@@ -28,14 +28,9 @@ var argv = yargs
   .argv;
 
 /**
- * Get the chosen command.
- */
-var command = argv._[0];
-
-/**
  * Perform the encryption or decryption process.
  */
-cipher[command]({
+nodecipher[argv._[0]]({
   input: argv.input,
   output: argv.output,
   password: argv.password || undefined,
