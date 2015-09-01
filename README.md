@@ -67,9 +67,24 @@ Usage: nodecipher <command> {options}
 
 Commands:
 
-  encrypt  Encrypt a given input file.
-  decrypt  Decrypt a given input file.
+  encrypt  Encrypt a given file.
+  decrypt  Decrypt a given file.
   list     List all available cipher options.
+
+Options:
+
+       --help, -h  Show the help menu.
+
+    --version, -v  Show version number.
+
+```
+
+#### Encrypt/Decrypt
+
+```
+
+Usage: nodecipher [encrypt|decrypt] -i string -o string[ -p string][ -a string]
+
 
 Options:
 
@@ -86,7 +101,6 @@ Options:
                    you are decrypting a file, the encryption method must be the same as the
                    one specified during encryption. (Optional; Default: cast5-cbc)
 
-        -help, -h  Show the help menu.
 ```
 
 #### Algorithms
