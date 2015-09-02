@@ -39,10 +39,10 @@ module.exports = function (yargs) {
         default: defaults.cipher.algorithm
       }
     })
-    .epilogue('For more information, visit http://github.com/nathanbuchar/node-cipher')
     .alias('h', 'help')
     .help('h')
     .wrap(74)
+    .epilogue('For more information, visit http://github.com/nathanbuchar/node-cipher')
     .argv;
 
   /**

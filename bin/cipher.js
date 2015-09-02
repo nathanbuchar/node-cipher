@@ -4,16 +4,6 @@ var yargs = require('yargs');
 
 var nodecipher = require('../');
 var xcrypt = require('./xcrypt');
-var list = require('./list');
-
-/**
- * List valid commands.
- */
-var commands = [
-  'encrypt',
-  'decrypt',
-  'list'
-];
 
 /**
  * Base command line interface.
@@ -25,17 +15,23 @@ var argv = yargs
   .usage('Usage: $0 <command>')
   .command('encrypt', 'Encrypt a given file', xcrypt)
   .command('decrypt', 'Decrypt a given file', xcrypt)
-  .command('list', 'List all available cipher algorithms', list)
-  .epilogue('For more information, visit http://github.com/nathanbuchar/node-cipher')
+  .describe('l', 'List all available cipher algorithms')
+  .alias('l', 'list')
   .alias('h', 'help')
   .alias('v', 'version')
   .help('h')
   .wrap(74)
+  .epilogue('For more information, visit http://github.com/nathanbuchar/node-cipher')
   .argv;
 
 /**
- * Show help if the chosen command is invalid.
+ * Show help menu if `list` is not chosen and the specified command is invalid.
  */
-if (commands.indexOf(argv._[0]) < 0) {
+if (argv.list) {
+  var algorithmArray = nodecipher.list();
+  var algorithmList = algorithmArray.join(', ');
+
+  console.log(algorithmList);
+} else if (['encrypt', 'decrypt'].indexOf(argv._[0]) < 0) {
   yargs.showHelp();
 }

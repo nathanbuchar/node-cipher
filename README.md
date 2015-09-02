@@ -62,16 +62,17 @@ npm install -g node-cipher
 
 
 ```
-Usage: nodecipher <command> {options}
+Usage: nodecipher <command>
 
 
 Commands:
 
   encrypt  Encrypt a given file.
   decrypt  Decrypt a given file.
-     list  List all available cipher options.
 
 Options:
+
+       --list, -l  List all available cipher algorithms.
 
        --help, -h  Show the help menu.
 
@@ -100,7 +101,7 @@ Options:
   --algorithm, -a  The cipher algorithm that you will use to encrypt or decrypt your file. If
                    you are decrypting a file, the chosen algorithm must be the same as the one
                    specified during encryption. By default, the encryption algorithm is set to
-                   `cast5-cbc`. Use `nodecipher list` to see a list of available cipher
+                   `cast5-cbc`. Use `nodecipher -l` to see a list of available cipher
                    algorithms. (Optional; Default: cast5-cbc)
 
        --help, -h  Show the help menu.
@@ -155,7 +156,7 @@ decrypt(options).then(function () {
 |`input`|`string`|The input filename relative to the current working directory.|Yes|
 |`output`|`string`|The output filename relative to the current working directory.|Yes|
 |`password`|`string`|The encryption password. Unlike the command line interface, this MUST be specified.|Yes|
-|`algorithm`|`string`|The algorithm to use. Use `$ nodecipher list` to see a list of available cipher algorithms. Default: `cast5-cbc`|No|
+|`algorithm`|`string`|The algorithm to use. Use `nodecipher -l` to see a list of available cipher algorithms. Default: `cast5-cbc`|No|
 
 
 
