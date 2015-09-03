@@ -15,10 +15,13 @@ var argv = yargs
   .usage('Usage: $0 <command>')
   .command('encrypt', 'Encrypt a given file', xcrypt)
   .command('decrypt', 'Decrypt a given file', xcrypt)
-  .describe('l', 'List all available cipher algorithms')
-  .alias('l', 'list')
-  .alias('h', 'help')
+  .option('l', {
+    alias: 'list',
+    describe: 'List all available cipher algorithms',
+    type: 'boolean'
+  })
   .alias('v', 'version')
+  .alias('h', 'help')
   .help('h')
   .wrap(74)
   .epilogue('For more information, visit http://github.com/nathanbuchar/node-cipher')

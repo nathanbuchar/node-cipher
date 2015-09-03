@@ -188,7 +188,7 @@ decrypt(options).then(function () {
     ```
     // Procfile
 
-    web: nodecipher decrypt -i .env.cast5 -o .env -p $CONFIG_KEY; npm start;
+    web: nodecipher decrypt -i .env.cast5 -o .env -p $CONFIG_KEY && npm start
     ```
 
 
