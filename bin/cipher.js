@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict';
+
 var yargs = require('yargs');
 
 var nodecipher = require('../');

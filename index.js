@@ -6,6 +6,8 @@
  * @since 2.3.0
  */
 
+'use strict';
+
 var crypto = require('crypto');
 
 var cipher = require('./lib/cipher');

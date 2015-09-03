@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict';
+
 var nodecipher = require('../');
 var defaults = require('../lib/defaults');
 
