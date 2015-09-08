@@ -84,7 +84,7 @@ Options:
 
 ```
 
-Usage: nodecipher [encrypt|decrypt] -i string -o string[ -p string][ -a string]
+Usage: nodecipher <encrypt|decrypt> -i string -o string[ -p string][ -a string]
 
 
 Options:
