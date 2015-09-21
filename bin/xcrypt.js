@@ -11,7 +11,7 @@ module.exports = function (yargs) {
    * Encrypt/Decrypt command line interface.
    */
   var argv = yargs
-    .usage('Usage: $0 ' + process.argv[2] + ' -i string -o string[ -p string][ -a string]')
+    .usage('Usage: $0 ' + process.argv[2] + ' -i input -o output [-p password] [-a algorithm] [--help]')
     .demand(['i','o'])
     .options({
       'i': {

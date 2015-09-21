@@ -14,7 +14,7 @@ var argv = yargs
   .version(function () {
     return require('../package').version;
   })
-  .usage('Usage: $0 <command>')
+  .usage('Usage: $0 [--version] [--help] [--list] <command> [<args>]')
   .command('encrypt', 'Encrypt a given file', xcrypt)
   .command('decrypt', 'Decrypt a given file', xcrypt)
   .option('l', {
