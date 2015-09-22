@@ -62,7 +62,7 @@ npm install -g node-cipher
 
 
 ```
-Usage: nodecipher <command>
+Usage: nodecipher [--version] [--help] [--list] <command> [<args>]
 
 
 Commands:
@@ -84,7 +84,7 @@ Options:
 
 ```
 
-Usage: nodecipher <encrypt|decrypt> -i string -o string[ -p string][ -a string]
+Usage: nodecipher <encrypt|decrypt> -i input -o output [-p password] [-a algorithm] [--help]
 
 
 Options:
