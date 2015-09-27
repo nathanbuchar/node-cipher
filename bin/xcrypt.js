@@ -5,6 +5,11 @@
 var nodecipher = require('../');
 var defaults = require('../lib/defaults');
 
+var actions = {
+  encrypt: '_cliEncrypt',
+  decrypt: '_cliDecrypt'
+};
+
 module.exports = function (yargs) {
 
   /**
@@ -37,20 +42,19 @@ module.exports = function (yargs) {
         demand: false,
         describe: 'The algorithm to use',
         type: 'string',
-        // choices: nodecipher.list(),
         default: defaults.cipher.algorithm
       }
     })
     .alias('h', 'help')
     .help('h')
     .wrap(74)
-    .epilogue('For more information, visit http://github.com/nathanbuchar/node-cipher')
+    .epilogue('For more information, visit http://git.io/node-cipher')
     .argv;
 
   /**
    * Perform the appropriate action based on the command chosen.
    */
-  nodecipher[argv._[0]]({
+  nodecipher[actions[argv._[0]]]({
     input: argv.input,
     output: argv.output,
     password: argv.password || undefined,

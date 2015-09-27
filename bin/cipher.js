@@ -26,7 +26,7 @@ var argv = yargs
   .alias('h', 'help')
   .help('h')
   .wrap(74)
-  .epilogue('For more information, visit http://github.com/nathanbuchar/node-cipher')
+  .epilogue('For more information, visit http://git.io/node-cipher')
   .argv;
 
 /**
