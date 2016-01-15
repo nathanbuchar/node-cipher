@@ -1,4 +1,4 @@
-node-cipher
+node-cipher [![Build Status](https://travis-ci.org/nathanbuchar/node-cipher.svg?branch=master)](https://travis-ci.org/nathanbuchar/node-cipher)
 ===========
 
 Securely encrypt sensitive files for use in public source control. [Find on NPM](https://www.npmjs.com/package/node-cipher).
