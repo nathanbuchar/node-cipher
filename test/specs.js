@@ -65,6 +65,14 @@ describe('Methods', function () {
     fs.rmdirSync('test/tmp');
   });
 
+  /**
+   * Test specs for encrypt().
+   *
+   * - should encrypt a file using the default algorithm
+   * - should encrypt a file using a custom algorithm
+   * - should apply a null scope to the callback if none is specified
+   * - should apply the scope to the callback if specified
+   */
   describe('encrypt()', function () {
 
     it('should encrypt a file using the default algorithm', function (done) {
@@ -90,8 +98,20 @@ describe('Methods', function () {
       });
     });
 
-    it('should properly apply the scope to the callback if specified', function (done) {
-      let scope = function () {};
+    it('should apply a null scope to the callback if none is specified', function (done) {
+      nodecipher.encrypt({
+        input: src.name,
+        output: enc.name,
+        password: 'alakazam'
+      }, function (err) {
+        should.not.exist(err);
+        expect(this).to.equal(null);
+        done();
+      });
+    });
+
+    it('should apply the scope to the callback if specified', function (done) {
+      let scope = {};
 
       nodecipher.encrypt({
         input: src.name,
@@ -105,6 +125,12 @@ describe('Methods', function () {
     });
   });
 
+  /**
+   * Test specs for encryptSync().
+   *
+   * - should encrypt a file using the default algorithm
+   * - should encrypt a file using a custom algorithm
+   */
   describe('encryptSync()', function () {
 
     it('should encrypt a file using the default algorithm', function () {
@@ -133,6 +159,16 @@ describe('Methods', function () {
     });
   });
 
+  /**
+   * Test specs for decrypt().
+   *
+   * - should decrypt a file using the default algorithm
+   * - should decrypt a file using a custom algorithm
+   * - should apply a null scope to the callback if none is specified
+   * - should apply the scope to the callback if specified
+   * - should fail when using the wrong password
+   * - should fail when using the wrong algorithm
+   */
   describe('decrypt()', function () {
 
     it('should decrypt a file using the default algorithm', function (done) {
@@ -185,8 +221,28 @@ describe('Methods', function () {
       });
     });
 
-    it('should properly apply the scope to the callback if specified', function (done) {
-      let scope = function () {};
+    it('should apply a null scope to the callback if none is specified', function (done) {
+
+      // Generate the file to decrypt.
+      nodecipher.encryptSync({
+        input: src.name,
+        output: enc.name,
+        password: 'alakazam'
+      });
+
+      nodecipher.decrypt({
+        input: enc.name,
+        output: dec.name,
+        password: 'alakazam'
+      }, function (err) {
+        should.not.exist(err);
+        expect(this).to.equal(null);
+        done();
+      });
+    });
+
+    it('should apply the scope to the callback if specified', function (done) {
+      let scope = {};
 
       // Generate the file to decrypt.
       nodecipher.encryptSync({
@@ -247,6 +303,14 @@ describe('Methods', function () {
     });
   });
 
+  /**
+   * Test specs for decryptSync().
+   *
+   * - should decrypt a file using the default algorithm
+   * - should decrypt a file using a custom algorithm
+   * - should fail when using the wrong password
+   * - should fail when using the wrong algorithm
+   */
   describe('decryptSync()', function () {
 
     it('should decrypt a file using the default algorithm', function (done) {
@@ -346,6 +410,11 @@ describe('Methods', function () {
     });
   });
 
+  /**
+   * Test specs for list().
+   *
+   * - should return an array of valid algorithms
+   */
   describe('list()', function () {
 
     it('should return an array of valid algorithms', function () {
@@ -385,6 +454,14 @@ describe('Options', function () {
 
   after('remove tmp directory', function () {
     fs.rmdirSync('test/tmp');
+  });
+
+  it('should fail if no options are provided', function () {
+    try {
+      nodecipher.encryptSync();
+    } catch (err) {
+      should.exist(err);
+    }
   });
 
   it('should fail if an input is not provided', function (done) {
