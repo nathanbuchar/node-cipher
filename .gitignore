@@ -15,5 +15,5 @@ results
 
 npm-debug.log
 node_modules
-config.copy.json
-config.json.cast5
+config.decrypted.json
+config.encrypted.json
