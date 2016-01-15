@@ -249,7 +249,7 @@ describe('Methods', function () {
 
   describe('decryptSync()', function () {
 
-    it('should decrypt a file using the default algorithm', function () {
+    it('should decrypt a file using the default algorithm', function (done) {
 
       // Generate the file to decrypt.
       nodecipher.encryptSync({
@@ -267,9 +267,15 @@ describe('Methods', function () {
       } catch (err) {
         should.not.exist(err);
       }
+
+      fs.readFile(dec.name, 'utf8', function (err, data) {
+        should.not.exist(err);
+        expect(data).to.equal('I am the night!');
+        done();
+      });
     });
 
-    it('should decrypt a file using a custom algorithm', function () {
+    it('should decrypt a file using a custom algorithm', function (done) {
 
       // Generate the file to decrypt.
       nodecipher.encryptSync({
@@ -289,6 +295,12 @@ describe('Methods', function () {
       } catch (err) {
         should.not.exist(err);
       }
+
+      fs.readFile(dec.name, 'utf8', function (err, data) {
+        should.not.exist(err);
+        expect(data).to.equal('I am the night!');
+        done();
+      });
     });
 
     it('should fail when using the wrong password', function () {
