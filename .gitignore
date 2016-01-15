@@ -1,19 +1,19 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-
+.DS_Store
+.atomignore
+.build
+.cache
+.env
 .gitconfig
+.jsdoc
+.sass-cache
+.tmp
 
-pids
-logs
-results
+*~
+*.bak
+*.log
+*.orig
+*.zip
 
-npm-debug.log
 node_modules
-config.copy.json
-config.json.cast5
+logs
+test
