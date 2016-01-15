@@ -72,6 +72,7 @@ describe('Methods', function () {
    * - should encrypt a file using a custom algorithm
    * - should apply a null scope to the callback if none is specified
    * - should apply the scope to the callback if specified
+   * - should fail if the input does not exist
    */
   describe('encrypt()', function () {
 
@@ -123,6 +124,17 @@ describe('Methods', function () {
         done();
       }, scope);
     });
+
+    it('should fail if the input does not exist', function (done) {
+      nodecipher.encrypt({
+        input: 'notarealfile.txt',
+        output: enc.name,
+        password: 'alakazam'
+      }, function (err) {
+        should.exist(err);
+        done();
+      });
+    });
   });
 
   /**
@@ -130,6 +142,7 @@ describe('Methods', function () {
    *
    * - should encrypt a file using the default algorithm
    * - should encrypt a file using a custom algorithm
+   * - should fail if the input does not exist
    */
   describe('encryptSync()', function () {
 
@@ -157,6 +170,18 @@ describe('Methods', function () {
         should.not.exist(err);
       }
     });
+
+    it('should fail if the input does not exist', function () {
+      try {
+        nodecipher.encryptSync({
+          input: 'notarealfile.txt',
+          output: enc.name,
+          password: 'alakazam'
+        });
+      } catch (err) {
+        should.exist(err);
+      }
+    });
   });
 
   /**
@@ -168,18 +193,19 @@ describe('Methods', function () {
    * - should apply the scope to the callback if specified
    * - should fail when using the wrong password
    * - should fail when using the wrong algorithm
+   * - should fail if the input does not exist
    */
   describe('decrypt()', function () {
 
-    it('should decrypt a file using the default algorithm', function (done) {
-
-      // Generate the file to decrypt.
+    beforeEach('create the encrypted file', function () {
       nodecipher.encryptSync({
         input: src.name,
         output: enc.name,
         password: 'alakazam'
       });
+    });
 
+    it('should decrypt a file using the default algorithm', function (done) {
       nodecipher.decrypt({
         input: enc.name,
         output: dec.name,
@@ -197,7 +223,7 @@ describe('Methods', function () {
 
     it('should decrypt a file using a custom algorithm', function (done) {
 
-      // Generate the file to decrypt.
+      // Overwrite the encrypted file using a custom algorithm.
       nodecipher.encryptSync({
         input: src.name,
         output: enc.name,
@@ -222,14 +248,6 @@ describe('Methods', function () {
     });
 
     it('should apply a null scope to the callback if none is specified', function (done) {
-
-      // Generate the file to decrypt.
-      nodecipher.encryptSync({
-        input: src.name,
-        output: enc.name,
-        password: 'alakazam'
-      });
-
       nodecipher.decrypt({
         input: enc.name,
         output: dec.name,
@@ -244,13 +262,6 @@ describe('Methods', function () {
     it('should apply the scope to the callback if specified', function (done) {
       let scope = {};
 
-      // Generate the file to decrypt.
-      nodecipher.encryptSync({
-        input: src.name,
-        output: enc.name,
-        password: 'alakazam'
-      });
-
       nodecipher.decrypt({
         input: enc.name,
         output: dec.name,
@@ -263,14 +274,6 @@ describe('Methods', function () {
     });
 
     it('should fail when using the wrong password', function (done) {
-
-      // Generate the file to decrypt.
-      nodecipher.encryptSync({
-        input: src.name,
-        output: enc.name,
-        password: 'alakazam'
-      });
-
       nodecipher.decrypt({
         input: enc.name,
         output: dec.name,
@@ -282,20 +285,22 @@ describe('Methods', function () {
     });
 
     it('should fail when using the wrong algorithm', function (done) {
-
-      // Generate the file to decrypt.
-      nodecipher.encryptSync({
-        input: src.name,
-        output: enc.name,
-        password: 'alakazam',
-        algorithm: 'aes-256-cbc'
-      });
-
       nodecipher.decrypt({
         input: enc.name,
         output: dec.name,
         password: 'alakazam',
-        algorithm: 'cast5-cbc'
+        algorithm: 'aes-128-cbc'
+      }, function (err) {
+        should.exist(err);
+        done();
+      });
+    });
+
+    it('should fail if the input does not exist', function (done) {
+      nodecipher.decrypt({
+        input: 'notarealfile.txt',
+        output: dec.name,
+        password: 'alakazam'
       }, function (err) {
         should.exist(err);
         done();
@@ -310,18 +315,19 @@ describe('Methods', function () {
    * - should decrypt a file using a custom algorithm
    * - should fail when using the wrong password
    * - should fail when using the wrong algorithm
+   * - should fail if the input does not exist
    */
   describe('decryptSync()', function () {
 
-    it('should decrypt a file using the default algorithm', function (done) {
-
-      // Generate the file to decrypt.
+    beforeEach('create the encrypted file', function () {
       nodecipher.encryptSync({
         input: src.name,
         output: enc.name,
         password: 'alakazam'
       });
+    });
 
+    it('should decrypt a file using the default algorithm', function (done) {
       try {
         nodecipher.decryptSync({
           input: enc.name,
@@ -341,7 +347,7 @@ describe('Methods', function () {
 
     it('should decrypt a file using a custom algorithm', function (done) {
 
-      // Generate the file to decrypt.
+      // Overwrite the encrypted file using a custom algorithm.
       nodecipher.encryptSync({
         input: src.name,
         output: enc.name,
@@ -368,14 +374,6 @@ describe('Methods', function () {
     });
 
     it('should fail when using the wrong password', function () {
-
-      // Generate the file to decrypt.
-      nodecipher.encryptSync({
-        input: src.name,
-        output: enc.name,
-        password: 'alakazam'
-      });
-
       try {
         nodecipher.decryptSync({
           input: enc.name,
@@ -388,21 +386,24 @@ describe('Methods', function () {
     });
 
     it('should fail when using the wrong algorithm', function () {
-
-      // Generate the file to decrypt.
-      nodecipher.encryptSync({
-        input: src.name,
-        output: enc.name,
-        password: 'alakazam',
-        algorithm: 'aes-256-cbc'
-      });
-
       try {
         nodecipher.decryptSync({
           input: enc.name,
           output: dec.name,
           password: 'alakazam',
-          algorithm: 'cast5-cbc'
+          algorithm: 'aes-128-cbc'
+        });
+      } catch (err) {
+        should.exist(err);
+      }
+    });
+
+    it('should fail if the input does not exist', function () {
+      try {
+        nodecipher.decryptSync({
+          input: 'notarealfile.txt',
+          output: dec.name,
+          password: 'alakazam'
         });
       } catch (err) {
         should.exist(err);
