@@ -2,25 +2,28 @@
 
 'use strict';
 
-var yargs = require('yargs');
+let _ = require('lodash');
+let yargs = require('yargs');
 
-var nodecipher = require('../');
-var xcrypt = require('./xcrypt');
+let nodecipher = require('../');
+let xcrypt = require('./xcrypt');
 
 /**
  * Base command line interface.
  */
-var argv = yargs
+let argv = yargs
   .version(function () {
     return require('../package').version;
   })
-  .usage('Usage: $0 [--version] [--help] [--list] <command> [<args>]')
+  .usage('Usage: nodecipher [--list] [--version] [--help] <command> <args>')
   .command('encrypt', 'Encrypt a given file', xcrypt)
   .command('decrypt', 'Decrypt a given file', xcrypt)
-  .option('l', {
-    alias: 'list',
-    describe: 'List all available cipher algorithms',
-    type: 'boolean'
+  .options({
+    'l': {
+      alias: 'list',
+      describe: 'List all available cipher algorithms',
+      type: 'boolean'
+    }
   })
   .alias('v', 'version')
   .alias('h', 'help')
@@ -33,10 +36,7 @@ var argv = yargs
  * Show help menu if `list` is not chosen and the specified command is invalid.
  */
 if (argv.list) {
-  var algorithmArray = nodecipher.list();
-  var algorithmList = algorithmArray.join(', ');
-
-  console.log(algorithmList);
-} else if (['encrypt', 'decrypt'].indexOf(argv._[0]) < 0) {
+  console.log(nodecipher.list().join(', '));
+} else if (!_.includes(nodecipher.commands, argv._[0])) {
   yargs.showHelp();
 }

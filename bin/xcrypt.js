@@ -2,33 +2,73 @@
 
 'use strict';
 
-var nodecipher = require('../');
-var defaults = require('../lib/defaults');
+let _ = require('lodash');
+let chalk = require('chalk');
+let inquirer = require('inquirer');
 
-var actions = {
-  encrypt: '_cliEncrypt',
-  decrypt: '_cliDecrypt'
-};
+let nodecipher = require('../');
 
 module.exports = function (yargs) {
 
   /**
-   * Encrypt/Decrypt command line interface.
+   * Perfom the appropriate encryption or decryption method with the given
+   * options. We define this ambiguity as "xcryption".
+   *
+   * @param {string} method
+   * @param {Object} options
+   * @param {Function} done
    */
-  var argv = yargs
-    .usage('Usage: $0 ' + process.argv[2] + ' -i input -o output [-p password] [-a algorithm] [--help]')
-    .demand(['i','o'])
+  function performXcryption(method, options, done) {
+    nodecipher[method]({
+      input: options.input,
+      output: options.output,
+      algorithm: options.algorithm,
+      password: options.password
+    }, done);
+  }
+
+  /**
+   * Prompt for the encryption key if none is provided, then perform the
+   * xcryption action.
+   *
+   * @param {string} method
+   * @param {Object} options
+   * @param {Function} done
+   */
+  function xcrypt(method, options, done) {
+    if (_.isUndefined(options.password)) {
+      inquirer.prompt([{
+        type: 'password',
+        message: 'Enter the encryption password',
+        name: 'password',
+        validate(input) {
+          return input.length > 0;
+        }
+      }], function (answers) {
+        let password = answers.password;
+
+        xcrypt(method, _.assign({ password }, options), done);
+      });
+    } else {
+      performXcryption(method, options, done);
+    }
+  }
+
+  let argv = yargs
+    .usage('Usage: nodecipher ' + process.argv[2] + ' -i input -o output ' +
+      '[-p password] [-a algorithm]')
+    .demand(['i', 'o'])
     .options({
       'i': {
         alias: 'input',
         demand: true,
-        describe: 'Relative path to the input file',
+        describe: 'The file to ' + process.argv[2],
         type: 'string'
       },
       'o': {
         alias: 'output',
         demand: true,
-        describe: 'Relative path to the output file',
+        describe: 'The ' + process.argv[2] + 'ed output file',
         type: 'string'
       },
       'p': {
@@ -42,7 +82,7 @@ module.exports = function (yargs) {
         demand: false,
         describe: 'The algorithm to use',
         type: 'string',
-        default: defaults.cipher.algorithm
+        default: nodecipher.defaults.algorithm
       }
     })
     .alias('h', 'help')
@@ -51,13 +91,13 @@ module.exports = function (yargs) {
     .epilogue('For more information, visit http://git.io/node-cipher')
     .argv;
 
-  /**
-   * Perform the appropriate action based on the command chosen.
-   */
-  nodecipher[actions[argv._[0]]]({
-    input: argv.input,
-    output: argv.output,
-    password: argv.password || undefined,
-    algorithm: argv.algorithm
-  });
+  if (_.includes(nodecipher.commands, argv._[0])) {
+    xcrypt(argv._[0], argv, function (err) {
+      if (err) {
+        console.log(chalk.red('Error! Invalid cipher algorithm or password.'));
+      }
+    });
+  } else {
+    yargs.showHelp();
+  }
 };
