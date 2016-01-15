@@ -26,18 +26,15 @@ $ npm install node-cipher
 ```
 
 
-***
-
-
 Options
 -------
 
 |Name|Type|Description|Required|Default|
 |:---|:--:|:----------|:------:|:-----:|
-|`input`|`string`|The input filename relative to the current working directory.|✓||
-|`output`|`string`|The output filename relative to the current working directory.|✓||
-|`password`|`string`|The encryption password. Unlike the command line interface, this MUST be specified.|✓||
-|`algorithm`|`string`|The algorithm to use. Use [`list()`](#listarray) to see a list of available cipher algorithms.||`"cast5-cbc"`|
+|`input`|`string`|The input file.|✓||
+|`output`|`string`|The output file.|✓||
+|`password`|`string`|The key that you will use to encrypt or decrypt your input file. If you are decrypting a file, the password must be the same as the one specified during encryption, or else the decryption will fail.|✓||
+|`algorithm`|`string`|The cipher algorithm to use. Use [`list()`](#listarray) to see a list of available cipher algorithms.||`"cast5-cbc"`|
 
 
 Methods
