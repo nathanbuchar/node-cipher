@@ -1,8 +1,11 @@
 {
   "name": "node-cipher",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Securely encrypt sensitive files for use in public source control.",
   "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
   "keywords": [
     "encrypt",
     "decrypt",
@@ -27,5 +30,10 @@
   "dependencies": {
     "lodash": "^4.0.0",
     "validate": "^3.0.1"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4",
+    "tmp": "0.0.28"
   }
 }
