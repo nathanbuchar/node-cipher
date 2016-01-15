@@ -15,5 +15,3 @@
 *.zip
 
 node_modules
-logs
-test
