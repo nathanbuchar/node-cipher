@@ -1,6 +1,6 @@
 test
 
 .editorconfig
-.jshintrc
 .jscsrc
+.jshintrc
 .travis.yml
