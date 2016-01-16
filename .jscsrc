@@ -66,10 +66,6 @@
     "lineBreakAfterOpeningBrace": true,
     "lineBreakBeforeClosingBrace": true
   },
-"maximumLineLength": {
-    "value": 80,
-    "allExcept": ["urlComments"]
-  },
   "disallowMixedSpacesAndTabs": true,
   "disallowTrailingWhitespace": true,
   "disallowTrailingComma": true,
