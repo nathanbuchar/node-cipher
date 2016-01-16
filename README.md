@@ -35,7 +35,7 @@ Options
 |`input`|`string`|The file that you wish to encrypt or decrypt.|✓||
 |`output`|`string`|The file that you wish to save the encrypted or decrypted contents to. This file does not necessarily need to exist.|✓||
 |`password`|`string`|The key that you will use to encrypt or decrypt your input file. If you are decrypting a file, the password must be the same as the one specified during encryption, or else the decryption will fail.|✓||
-|`algorithm`|`string`|The cipher algorithm to use. Use [`list()`](#listarray) to see a list of available cipher algorithms.||`"cast5-cbc"`|
+|`algorithm`|`string`|The cipher algorithm to use. Use [`list()`](#list) to see a list of available cipher algorithms.||`"cast5-cbc"`|
 
 
 Methods
@@ -60,7 +60,7 @@ Encrypts a file using the [options](#options) provided. Returns `undefined`.
 |--------:|:--:|:----------|:------:|
 |`options`|`Object`|See [options](#options).|✓|
 |`callback`|`Function`|The function to call when the encryption has completed.||
-|`scope`|`Object`|The Function scope for the `callback` parameter, if provided.||
+|`scope`|`Object`|The scope for the `callback` function parameter, if provided.||
 
 #### Example
 
@@ -120,7 +120,7 @@ Decrypts a file using the [options](#options) provided. Returns `undefined`.
 |--------:|:--:|:----------|:------:|
 |`options`|`Object`|See [options](#options).|✓|
 |`callback`|`Function`|The function to call when the decryption has completed.||
-|`scope`|`Object`|The Function scope for the `callback` parameter, if provided.||
+|`scope`|`Object`|The scope for the `callback` function parameter, if provided.||
 
 #### Example
 
