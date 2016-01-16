@@ -7,7 +7,7 @@ Securely encrypt sensitive files for use in public source control. [Find on NPM]
 
 Let's say you have a file in your project name `config.json` which contains sensitive information like private keys and database passwords. What should you do if you need to publicly host a repository containing this file? Certainly you wouldn't want to make the contents of `config.json` visible to the outside world.
 
-You *could* remove the file from source control, and send the file to everyone in your team every time you update the file. But this is pretty cumbersome. Or, you can use node-cipher to encrypt the file and add the encrypted version to source control. This can later be decrypted by each team member independently with a password that you provide. Every time you or one of your team members makes a change to `config.json`, just re-encrypt the file and commit. It's that easy!
+You *could* remove the file from source control and send the file to everyone in your team every time you update the file, but this approach is very cumbersome. Instead, you can use node-cipher to encrypt the file and add the encrypted version to source control. This can later be decrypted by each team member independently with a password that you provide. Every time you or one of your team members makes a change to `config.json`, just re-encrypt the file and commit. It's that easy!
 
 Don't forget to add the original `config.json` file to `.gitignore`!
 
@@ -33,9 +33,13 @@ Options
 |Name|Type|Description|Required|Default|
 |:---|:--:|:----------|:------:|:-----:|
 |`input`|`string`|The file that you wish to encrypt or decrypt.|✓||
-|`output`|`string`|The file that you wish to save the encrypted or decrypted contents to. This file does not necessarily need to exist.|✓||
-|`password`|`string`|The key that you will use to encrypt or decrypt your input file. If you are decrypting a file, the password must be the same as the one specified during encryption, or else the decryption will fail.|✓||
-|`algorithm`|`string`|The cipher algorithm to use. Use [`list()`](#list) to see a list of available cipher algorithms.||`"cast5-cbc"`|
+|`output`|`string`|The file that you wish to save the encrypted or decrypted contents to. This file does not necessarily need to exist beforehand.|✓||
+|`password`|`string`|The password to use when deriving the encryption key.|✓||
+|`salt`|`string`|The salt to use when deriving the encryption key.||`"nodecipher"`|
+|`iterations`|`number`|The number of iterations to use when deriving the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete.||`1000`|
+|`keylen`|`number`|The desired byte length for the derived key.||`512`|
+|`digest`|`string`|The HMAC digest algorithm with which to derive the key.||`"sha1"`|
+|`algorithm`|`string`|The cipher algorithm to use when encrypting or decrypting the input file. Use [`list()`](#list) to see a list of available cipher algorithms.||`"cast5-cbc"`|
 
 
 Methods

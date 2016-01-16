@@ -201,6 +201,90 @@ describe('Options', function () {
   });
 
   /**
+   * Test specs for options.salt.
+   *
+   * - should fail if not a string
+   */
+  describe('salt', function () {
+
+    it('should fail if not a string', function (done) {
+      nodecipher.encrypt({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        salt: Array
+      }, function (err) {
+        should.exist(err);
+        expect(err.toString()).to.equal('Error: "salt" is required and must be a string.');
+        done();
+      });
+    });
+  });
+
+  /**
+   * Test specs for options.iterations.
+   *
+   * - should fail if not a number
+   */
+  describe('iterations', function () {
+
+    it('should fail if not a string', function (done) {
+      nodecipher.encrypt({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        iterations: Array
+      }, function (err) {
+        should.exist(err);
+        expect(err.toString()).to.equal('Error: "iterations" is required and must be a number.');
+        done();
+      });
+    });
+  });
+
+  /**
+   * Test specs for options.keylen.
+   *
+   * - should fail if not a number
+   */
+  describe('keylen', function () {
+
+    it('should fail if not a string', function (done) {
+      nodecipher.encrypt({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        keylen: Array
+      }, function (err) {
+        should.exist(err);
+        expect(err.toString()).to.equal('Error: "keylen" is required and must be a number.');
+        done();
+      });
+    });
+  });
+
+  /**
+   * Test specs for options.digest.
+   *
+   * - should fail if not a string
+   */
+  describe('digest', function () {
+
+    it('should fail if not a string', function (done) {
+      nodecipher.encrypt({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        digest: Array
+      }, function (err) {
+        should.exist(err);
+        expect(err.toString()).to.equal('Error: "digest" is required and must be a string.');
+        done();
+      });
+    });
+  });
+
+  /**
    * Test specs for options.algorithm.
    *
    * - should fail if not valid
@@ -362,6 +446,10 @@ describe('Methods', function () {
    *
    * - should succeed using the default algorithm
    * - should succeed using a custom algorithm
+   * - should succeed using a custom salt
+   * - should succeed using custom key iterations
+   * - should succeed using a custom keylen
+   * - should succeed using a custom digest
    * - should apply a null scope to the callback if none is specified
    * - should apply the scope to the callback if specified
    * - should fail when using the wrong password
@@ -412,6 +500,110 @@ describe('Methods', function () {
         output: files[2].name,
         password: 'alakazam',
         algorithm: 'aes-128-cbc'
+      }, function (err) {
+        should.not.exist(err);
+
+        fse.readFile(files[2].name, 'utf8', function (err, data) {
+          should.not.exist(err);
+          expect(data).to.equal(content);
+          done();
+        });
+      });
+    });
+
+    it('should succeed using a custom salt', function (done) {
+
+      // Overwrite the encrypted file using a custom algorithm.
+      nodecipher.encryptSync({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        salt: 'abracadabra'
+      });
+
+      nodecipher.decrypt({
+        input: files[1].name,
+        output: files[2].name,
+        password: 'alakazam',
+        salt: 'abracadabra'
+      }, function (err) {
+        should.not.exist(err);
+
+        fse.readFile(files[2].name, 'utf8', function (err, data) {
+          should.not.exist(err);
+          expect(data).to.equal(content);
+          done();
+        });
+      });
+    });
+
+    it('should succeed using custom key iterations', function (done) {
+
+      // Overwrite the encrypted file using a custom algorithm.
+      nodecipher.encryptSync({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        iterations: 1001
+      });
+
+      nodecipher.decrypt({
+        input: files[1].name,
+        output: files[2].name,
+        password: 'alakazam',
+        iterations: 1001
+      }, function (err) {
+        should.not.exist(err);
+
+        fse.readFile(files[2].name, 'utf8', function (err, data) {
+          should.not.exist(err);
+          expect(data).to.equal(content);
+          done();
+        });
+      });
+    });
+
+    it('should succeed using a custom keylen', function (done) {
+
+      // Overwrite the encrypted file using a custom algorithm.
+      nodecipher.encryptSync({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        keylen: 256
+      });
+
+      nodecipher.decrypt({
+        input: files[1].name,
+        output: files[2].name,
+        password: 'alakazam',
+        keylen: 256
+      }, function (err) {
+        should.not.exist(err);
+
+        fse.readFile(files[2].name, 'utf8', function (err, data) {
+          should.not.exist(err);
+          expect(data).to.equal(content);
+          done();
+        });
+      });
+    });
+
+    it('should succeed using a custom digest', function (done) {
+
+      // Overwrite the encrypted file using a custom algorithm.
+      nodecipher.encryptSync({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        digest: 'sha256'
+      });
+
+      nodecipher.decrypt({
+        input: files[1].name,
+        output: files[2].name,
+        password: 'alakazam',
+        digest: 'sha256'
       }, function (err) {
         should.not.exist(err);
 
@@ -489,6 +681,10 @@ describe('Methods', function () {
    *
    * - should succeed using the default algorithm
    * - should succeed using a custom algorithm
+   * - should succeed using a custom salt
+   * - should succeed using custom key iterations
+   * - should succeed using a custom keylen
+   * - should succeed using a custom digest
    * - should fail when using the wrong password
    * - should fail when using the wrong algorithm
    * - should fail if the input does not exist
@@ -540,6 +736,118 @@ describe('Methods', function () {
           output: files[2].name,
           password: 'alakazam',
           algorithm: 'aes-128-cbc'
+        });
+      } catch (err) {
+        should.not.exist(err);
+      }
+
+      fse.readFile(files[2].name, 'utf8', function (err, data) {
+        should.not.exist(err);
+        expect(data).to.equal(content);
+        done();
+      });
+    });
+
+    it('should succeed using a custom salt', function (done) {
+
+      // Overwrite the encrypted file using a custom algorithm.
+      nodecipher.encryptSync({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        salt: 'abracadabra'
+      });
+
+      try {
+        nodecipher.decryptSync({
+          input: files[1].name,
+          output: files[2].name,
+          password: 'alakazam',
+          salt: 'abracadabra'
+        });
+      } catch (err) {
+        should.not.exist(err);
+      }
+
+      fse.readFile(files[2].name, 'utf8', function (err, data) {
+        should.not.exist(err);
+        expect(data).to.equal(content);
+        done();
+      });
+    });
+
+    it('should succeed using custom key iterations', function (done) {
+
+      // Overwrite the encrypted file using a custom algorithm.
+      nodecipher.encryptSync({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        iterations: 1001
+      });
+
+      try {
+        nodecipher.decryptSync({
+          input: files[1].name,
+          output: files[2].name,
+          password: 'alakazam',
+          iterations: 1001
+        });
+      } catch (err) {
+        should.not.exist(err);
+      }
+
+      fse.readFile(files[2].name, 'utf8', function (err, data) {
+        should.not.exist(err);
+        expect(data).to.equal(content);
+        done();
+      });
+    });
+
+    it('should succeed using a custom keylen', function (done) {
+
+      // Overwrite the encrypted file using a custom algorithm.
+      nodecipher.encryptSync({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        keylen: 256
+      });
+
+      try {
+        nodecipher.decryptSync({
+          input: files[1].name,
+          output: files[2].name,
+          password: 'alakazam',
+          keylen: 256
+        });
+      } catch (err) {
+        should.not.exist(err);
+      }
+
+      fse.readFile(files[2].name, 'utf8', function (err, data) {
+        should.not.exist(err);
+        expect(data).to.equal(content);
+        done();
+      });
+    });
+
+    it('should succeed using a custom digest', function (done) {
+
+      // Overwrite the encrypted file using a custom algorithm.
+      nodecipher.encryptSync({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam',
+        digest: 'sha256'
+      });
+
+      try {
+        nodecipher.decryptSync({
+          input: files[1].name,
+          output: files[2].name,
+          password: 'alakazam',
+          digest: 'sha256'
         });
       } catch (err) {
         should.not.exist(err);
