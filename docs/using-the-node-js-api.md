@@ -58,13 +58,13 @@ There are several public methods available via the Node JS API: [`encrypt`][meth
 
 **`encrypt(options[, callback[, scope]])`**
 
-This method asynchronously encrypts the chosen input file using the [options] provided, and then saves the encrypted content to the chosen output file.
+This method asynchronously encrypts the chosen input file using the [options][options] provided, and then saves the encrypted content to the chosen output file.
 
 
 #### Parameters
 |Parameter|Type|Description|Required|
 |--------:|:--:|:----------|:------:|
-|`options`|`Object`|The options object. See [options].|✓|
+|`options`|`Object`|The options object. See [options][options].|✓|
 |`callback`|`Function`|The function to call when the encryption has completed.||
 |`scope`|`Object`|The scope for the `callback` function parameter, if provided.||
 
@@ -96,7 +96,7 @@ This is the synchronous version of [`encrypt()`][method_encrypt]. This method do
 #### Parameters
 |Parameter|Type|Description|Required|
 |--------:|:--:|:----------|:------:|
-|`options`|`Object`|The options object. See [options].|✓|
+|`options`|`Object`|The options object. See [options][options].|✓|
 
 #### Example
 The following example demonstrates synchronously encrypting the contents of `config.json` using `passw0rd` as the password, then saving the encrypted contents to a file named `config.json.cast5`.
@@ -117,12 +117,12 @@ nodecipher.encryptSync({
 
 **`decrypt(options[, callback[, scope]])`**
 
-This method asynchronously decrypts the chosen input file using the [options] provided, and then saves the decrypted content to the chosen output file.
+This method asynchronously decrypts the chosen input file using the [options][options] provided, and then saves the decrypted content to the chosen output file.
 
 #### Parameters
 |Parameter|Type|Description|Required|
 |--------:|:--:|:----------|:------:|
-|`options`|`Object`|The options object. See [options].|✓|
+|`options`|`Object`|The options object. See [options][options].|✓|
 |`callback`|`Function`|The function to call when the decryption has completed.||
 |`scope`|`Object`|The scope for the `callback` function parameter, if provided.||
 
@@ -154,7 +154,7 @@ This is the synchronous version of [`decrypt()`][method_decrypt]. This method do
 #### Parameters
 |Parameter|Type|Description|Required|
 |--------:|:--:|:----------|:------:|
-|`options`|`Object`|The options object. See [options].|✓|
+|`options`|`Object`|The options object. See [options][options].|✓|
 
 #### Example
 The following example demonstrates synchronously decrypting the contents of `config.json.cast5` using `passw0rd` as the password, then saving the decrypted contents back to a file named `config.json`.
