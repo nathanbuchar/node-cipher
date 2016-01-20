@@ -43,10 +43,10 @@ Documentation
 The documentation is pretty extensive, and it's split into two pieces.
 
 **How to use the Command Line Interface**
-[Documentation](https://github.com/nathanbuchar/node-cipher-cli/blob/master/docs/cli.md)
+[Documentation](https://github.com/nathanbuchar/node-cipher/blob/master/docs/cli.md)
 
 **Using the Node JS API**
-[Documentation](https://github.com/nathanbuchar/node-cipher-cli/blob/master/docs/api.md)
+[Documentation](https://github.com/nathanbuchar/node-cipher/blob/master/docs/api.md)
 
 
 ***
