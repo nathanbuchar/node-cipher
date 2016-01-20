@@ -9,7 +9,6 @@ Using the Node JS API
 Contents
 --------
 
-* [Introduction][section_introduction]
 * [Installation][section_installation]
 * [Public Methods][section_methods]
   * [`encrypt()`][method_encrypt]
@@ -27,22 +26,15 @@ Contents
 
 
 
-Introduction
-------------
-
-**Welcome!** This section details the Node JS API documentation for node-cipher. Here, you'll find instructions on installation, public methods, options available to you, and several practical examples.
-
-
-
 
 Installation
 ------------
 
-To install node-cipher, simply run the following
+To install NodeCipher, simply run the following
 
     $ npm install node-cipher
 
-This will install the node-cipher package into your project's `node_modules` directory.
+This will install the NodeCipher package into your project's `node_modules` directory.
 
 
 
@@ -307,7 +299,6 @@ Examples
 
 [root]: ../../
 
-[section_introduction]: #introduction
 [section_installation]: #installation
 [section_options]: #options
 [section_methods]: #public-methods
