@@ -94,7 +94,9 @@ _.each(['encrypt', 'decrypt'], command => {
      *
      * This is the salt that will be used to derive the key. By default, this is
      * "nodecipher", however the user may choose to customize this on their own
-     * for greater security.
+     * for greater security. This should be as unique as possible. It is
+     * recommended that salts are random and their lengths are greater than 16
+     * bytes.
      *
      * @default "nodecipher"
      */
