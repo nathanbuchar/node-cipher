@@ -899,17 +899,32 @@ describe('Methods', function () {
   });
 
   /**
-   * Test specs for list().
+   * Test specs for listAlgorithms().
    *
    * - should return an array of valid algorithms
    */
-  describe('list()', function () {
+  describe('listAlgorithms()', function () {
 
     it('should return an array of valid algorithms', function () {
-      let algorithms = nodecipher.list();
+      let algorithms = nodecipher.listAlgorithms();
 
       expect(algorithms).to.be.an('array');
       expect(_.difference(algorithms, crypto.getCiphers())).to.have.length(0);
+    });
+  });
+
+  /**
+   * Test specs for listHashes().
+   *
+   * - should return an array of valid algorithms
+   */
+  describe('listHashes()', function () {
+
+    it('should return an array of valid algorithms', function () {
+      let algorithms = nodecipher.listHashes();
+
+      expect(algorithms).to.be.an('array');
+      expect(_.difference(algorithms, crypto.getHashes())).to.have.length(0);
     });
   });
 });

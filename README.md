@@ -3,7 +3,13 @@ node-cipher [![Build Status](https://travis-ci.org/nathanbuchar/node-cipher.svg?
 
 Securely encrypt sensitive files for use in public source control. [Find on NPM](https://www.npmjs.com/package/node-cipher).
 
-**Why should I use node-cipher?**
+
+**What is node-cipher?**
+
+Node-cipher is both a command line tool and a Node JS package which allows you to easily encrypt or decrypt files containing sensitive information. This way, you can safely add encrypted files to a public repository, even if they contain API keys and passwords.
+
+
+**Why would I use node-cipher?**
 
 Let's say you have a file in your project name `config.json` which contains sensitive information like private keys and database passwords. What should you do if you need to publicly host a repository containing this file? Certainly you wouldn't want to make the contents of `config.json` visible to the outside world.
 
@@ -11,189 +17,43 @@ You *could* remove the file from source control and send the file to everyone in
 
 Don't forget to add the original `config.json` file to `.gitignore`!
 
-
-***
-
-**:exclamation: If you're looking for the node-cipher command line tool, it has moved to [node-cipher-cli](http://github.com/nathanbuchar/node-cipher-cli).**
-
 ***
 
 
-Install
--------
+Installation
+------------
 
+**Command Line Interface**
+```
+$ npm install -g node-cipher
+```
+
+**Node JS**
 ```
 $ npm install node-cipher
 ```
 
 
-Options
--------
-
-|Name|Type|Description|Required|Default|
-|:---|:--:|:----------|:------:|:-----:|
-|`input`|`string`|The file that you wish to encrypt or decrypt.|✓||
-|`output`|`string`|The file that you wish to save the encrypted or decrypted contents to. This file does not necessarily need to exist beforehand.|✓||
-|`password`|`string`|The password to use when deriving the encryption key.|✓||
-|`salt`|`string`|The salt to use when deriving the encryption key.||`"nodecipher"`|
-|`iterations`|`number`|The number of iterations to use when deriving the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete.||`1000`|
-|`keylen`|`number`|The desired byte length for the derived key.||`512`|
-|`digest`|`string`|The HMAC digest algorithm with which to derive the key.||`"sha1"`|
-|`algorithm`|`string`|The cipher algorithm to use when encrypting or decrypting the input file. Use [`list()`](#list) to see a list of available cipher algorithms.||`"cast5-cbc"`|
-
-
-Methods
--------
-
-* [`encrypt()`](#encrypt)
-* [`encryptSync()`](#encryptsync)
-* [`decrypt()`](#decrypt)
-* [`decryptSync()`](#decryptsync)
-* [`list()`](#list)
-
 ***
 
-### encrypt()
 
-##### `encrypt(options[, callback[, scope]])`
+Documentation
+-------------
 
-Encrypts a file using the [options](#options) provided. Returns `undefined`.
+The documentation is pretty extensive, and it's split into two pieces.
 
-#### Parameters
-|Parameter|Type|Description|Required|
-|--------:|:--:|:----------|:------:|
-|`options`|`Object`|See [options](#options).|✓|
-|`callback`|`Function`|The function to call when the encryption has completed.||
-|`scope`|`Object`|The scope for the `callback` function parameter, if provided.||
+**How to use the Command Line Interface**
+[Documentation](https://github.com/nathanbuchar/node-cipher-cli/blob/master/docs/cli.md)
 
-#### Example
-
-Encrypts `config.json` into `config.json.cast5` using the password `"passw0rd"`.
-
-```js
-let nodecipher = require('node-cipher');
-
-nodecipher.encrypt({
-  input: 'config.json',
-  output: 'config.json.cast5',
-  password: 'passw0rd'
-}, function (err) {
-  if (err) throw err;
-
-  console.log('config.json encrypted.');
-});
-```
-
-***
-
-### encryptSync()
-
-##### `encryptSync(options)`
-
-The synchronous version of [`encrypt()`](#encrypt). Returns `undefined`.
-
-#### Parameters
-|Parameter|Type|Description|Required|
-|--------:|:--:|:----------|:------:|
-|`options`|`Object`|See [options](#options).|✓|
-
-#### Example
-
-Synchronously encrypts `config.json` into `config.json.cast5` using the password `"passw0rd"`.
-
-```js
-let nodecipher = require('node-cipher');
-
-nodecipher.encryptSync({
-  input: 'config.json',
-  output: 'config.json.cast5',
-  password: 'passw0rd'
-});
-```
-
-***
-
-### decrypt()
-
-##### `decrypt(options[, callback[, scope]])`
-
-Decrypts a file using the [options](#options) provided. Returns `undefined`.
-
-#### Parameters
-|Parameter|Type|Description|Required|
-|--------:|:--:|:----------|:------:|
-|`options`|`Object`|See [options](#options).|✓|
-|`callback`|`Function`|The function to call when the decryption has completed.||
-|`scope`|`Object`|The scope for the `callback` function parameter, if provided.||
-
-#### Example
-
-Decrypts `config.json.cast5` back into `config.json` using the password `"passw0rd"`.
-
-```js
-let nodecipher = require('node-cipher');
-
-nodecipher.decrypt({
-  input: 'config.json.cast5',
-  output: 'config.json',
-  password: 'passw0rd'
-}, function (err) {
-  if (err) throw err;
-
-  console.log('config.json.cast5 decrypted.');
-});
-```
-
-***
-
-### decryptSync()
-
-##### `decryptSync(options)`
-
-The synchronous version of [`decrypt()`](#decrypt).  Returns `undefined`.
-
-#### Parameters
-|Parameter|Type|Description|Required|
-|--------:|:--:|:----------|:------:|
-|`options`|`Object`|See [options](#options).|✓|
-
-#### Example
-
-Synchronously decrypts `config.json.cast5` back into `config.json` using the password `"passw0rd"`.
-
-```js
-let nodecipher = require('node-cipher');
-
-nodecipher.decryptSync({
-  input: 'config.json.cast5',
-  output: 'config.json',
-  password: 'passw0rd'
-});
-```
-
-***
-
-### list()
-
-##### `list():Array`
-
-Lists all available cipher algorithms as an Array. Returns `Array`.
-
-#### Example
-
-```js
-let nodecipher = require('node-cipher');
-
-console.log(nodecipher.list());
-// => ['CAST-cbc', 'aes-128-cbc', ..., 'seed-ofb']
-```
+**Using the Node JS API**
+[Documentation](https://github.com/nathanbuchar/node-cipher-cli/blob/master/docs/api.md)
 
 
 ***
 
 
-Debug
------
+Debugging
+---------
 
 Node-cipher implements [debug](https://github.com/visionmedia/debug) for development logging. To set up node-cipher with debug, set the following environment variables:
 
