@@ -13,7 +13,7 @@ Node-cipher is both a command line tool and a Node JS API which allows you to ea
 
 
 
-#### Why would I use node-cipher?
+#### Why use node-cipher?
 
 Let's say you have a file in your project name `config.json` which contains sensitive information like private keys and database passwords. What should you do if you need to publicly host a repository containing this file? Certainly you wouldn't want to make the contents of `config.json` visible to the outside world.
 
@@ -71,11 +71,11 @@ The documentation is rather extensive and thereby is split into two pieces.
 
 1. **Using the Command Line Interface**
 
-  [Click here][external_docs_cli] for documentation on how to use node-cipher in the command line.
+  [Click here][docs_cli] for documentation on how to use node-cipher in the command line.
 
 2. **Using the Node JS API**
 
-  [Click here][external_docs_api] for documentation on how to use node-cipher within Node JS (v4+).
+  [Click here][docs_api] for documentation on how to use node-cipher within Node JS (v4+).
 
 
 
@@ -121,7 +121,7 @@ MIT
 
 
 [section_what]: #what-is-node-cipher
-[section_why]: #why-would-i-use-node-cipher
+[section_why]: #why-use-node-cipher
 [section_how]: #how-it-works
 [section_installation]: #installation
 [section_documentation]: #documentation
@@ -129,13 +129,13 @@ MIT
 [section_authors]: #authors
 [section_license]: #license
 
+[docs_cli]: ./docs/using-the-command-line-interface.md
+[docs_api]: ./docs/using-the-node-js-api.md
+
 [external_package_node-cipher]: https://npmjs.com/package/node-cipher
 [external_package_debug]: https://npmjs.com/package/debug
 
 [external_crypto_create-cipher]: https://nodejs.org/api/crypto.html#crypto_crypto_createcipher_algorithm_password
 [external_crypto_pbkdf2]: https://nodejs.org/api/crypto.html#crypto_crypto_pbkdf2_password_salt_iterations_keylen_digest_callback
-
-[external_docs_cli]: https://github.com/nathanbuchar/node-cipher/blob/master/docs/cli.md
-[external_docs_api]: https://github.com/nathanbuchar/node-cipher/blob/master/docs/api.md
 
 [contact_nathan]: mailto:hello@nathanbuchar.com
