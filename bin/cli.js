@@ -79,7 +79,8 @@ _.each(['encrypt', 'decrypt'], command => {
      * Define option: -a, --algorithm <value>
      *
      * This is the algorithm that will be used in tandem with the derived key to
-     * create the cipher.
+     * create the cipher function that will be used to encrypt or decrypt the
+     * input file.
      *
      * @default "cast5-cbc"
      */

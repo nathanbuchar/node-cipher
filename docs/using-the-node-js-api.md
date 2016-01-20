@@ -216,12 +216,12 @@ Options
 |:---|:--:|:----------|:------:|:-----:|
 |`input`|`string`|The file that you wish to encrypt or decrypt.|✓||
 |`output`|`string`|The file that you wish to save the encrypted or decrypted contents to. This file does not necessarily need to exist beforehand.|✓||
-|`password`|`string`|The password that we will use to derive the encryption key from.|✓||
-|`algorithm`|`string`|The cipher algorithm to use when encrypting or decrypting the input file. Use [`listAlgorithms()`][method_list-algorithms] to see a list of available cipher algorithms.||`"cast5-cbc"`|
-|`salt`|`string`|The salt to use when deriving the encryption key.||`"nodecipher"`|
-|`iterations`|`number`|The number of iterations to use when deriving the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete.||`1000`|
+|`password`|`string`|The password used to derive the encryption key from.|✓||
+|`algorithm`|`string`|The algorithm used in tandem with the derived key to create the cipher function that will be used to encrypt or decrypt the input file. Use [`listAlgorithms()`][method_list-algorithms] to see a list of available cipher algorithms.||`"cast5-cbc"`|
+|`salt`|`string`|The salt used to derive the encryption key.||`"nodecipher"`|
+|`iterations`|`number`|The number of iterations used to derive the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete.||`1000`|
 |`keylen`|`number`|The desired byte length for the derived key.||`512`|
-|`digest`|`string`|The HMAC digest algorithm to use to derive the key. Use [`listHashes()`][method_list-hashes] to see a list of available HMAC hashes.||`"sha1"`|
+|`digest`|`string`|The HMAC digest algorithm used to derive the key. Use [`listHashes()`][method_list-hashes] to see a list of available HMAC hashes.||`"sha1"`|
 
 
 
