@@ -122,6 +122,7 @@ function handleBadDecrypt(opts, err) {
   console.log(chalk.red(
     '\nBad decrypt. One or more of the following may be incorrect:\n\n' +
       '  - password\n' +
+      '  - vector\n' +
       '  - salt\n' +
       '  - iterations\n' +
       '  - keylen\n' +

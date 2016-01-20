@@ -66,9 +66,9 @@ _.each(['encrypt', 'decrypt'], command => {
     /**
      * Define option: -p, --password <value>
      *
-     * This is the password that will be used to derive the encryption key from.
-     * If the password is not provided, the user will be asked to provide one,
-     * as it is required.
+     * This is the password that will be used to derive the encryption key. If
+     * the password is not provided, the user will be asked to provide one, as
+     * it is required.
      */
     .option(
       '-p, --password <value>',
@@ -76,11 +76,27 @@ _.each(['encrypt', 'decrypt'], command => {
     )
 
     /**
+     * Define option: -a, --algorithm <value>
+     *
+     * This is the algorithm that will be used in tandem with the derived key to
+     * create the cipher function that will be used to encrypt or decrypt the
+     * input file.
+     *
+     * @default "cast5-cbc"
+     */
+    .option(
+      '-a, --algorithm [value]',
+      'the algorithm used to ceeate the cipher'
+    )
+
+    /**
      * Define option: -s, --salt <value>
      *
      * This is the salt that will be used to derive the key. By default, this is
      * "nodecipher", however the user may choose to customize this on their own
-     * for greater security.
+     * for greater security. This should be as unique as possible. It is
+     * recommended that salts are random and their lengths are greater than 16
+     * bytes.
      *
      * @default "nodecipher"
      */
@@ -92,22 +108,22 @@ _.each(['encrypt', 'decrypt'], command => {
     /**
      * Define option: -i, --iterations <n>
      *
-     * This is the number of iterations with which to derive the encryption key.
-     * The higher the number, the more secure, but the longer it will take to
+     * This is the number of iterations used to derive the encryption key. The
+     * higher the number, the more secure, but the longer it will take to
      * process.
      *
      * @default 1000
      */
     .option(
       '-i, --iterations [n]',
-      'the number of iterations with which to derive the key',
+      'the number of iterations used derive the key',
       parseInt
     )
 
     /**
      * Define option: -l, --keylen <n>
      *
-     * This is the desired byte length for the derived encryption key.
+     * This is the desired byte length for the derived key.
      *
      * @default 512
      */
@@ -120,26 +136,14 @@ _.each(['encrypt', 'decrypt'], command => {
     /**
      * Define option: -d, --digest <value>
      *
-     * This is the HMAC digest algorithm to use to derive the key, combined with
-     * all the other options.
+     * This is the HMAC hash that is used to derive the key from the salt,
+     * iterations, key length, and password.
      *
      * @default "sha1"
      */
     .option(
       '-d, --digest [value]',
-      'the HMAC digest algorithm to use to derive the key'
-    )
-
-    /**
-     * Define option: -a, --algorithm <value>
-     *
-     * This is the algorithm to use to encrypt the file with the encryption key.
-     *
-     * @default "cast5-cbc"
-     */
-    .option(
-      '-a, --algorithm [value]',
-      'the algorithm to use to encrypt the file'
+      'the hash used to derive the key'
     )
 
     /**

@@ -1,23 +1,53 @@
 node-cipher [![Build Status](https://travis-ci.org/nathanbuchar/node-cipher.svg?branch=master)](https://travis-ci.org/nathanbuchar/node-cipher)
 ===========
 
-Securely encrypt sensitive files for use in public source control. [Find on NPM](https://www.npmjs.com/package/node-cipher).
+Securely encrypt sensitive files for use in public source control. [Find on NPM][external_package_node-cipher].
 
 
-**What is node-cipher?**
-
-Node-cipher is both a command line tool and a Node JS package which allows you to easily encrypt or decrypt files containing sensitive information. This way, you can safely add encrypted files to a public repository, even if they contain API keys and passwords.
-
-
-**Why would I use node-cipher?**
-
-Let's say you have a file in your project name `config.json` which contains sensitive information like private keys and database passwords. What should you do if you need to publicly host a repository containing this file? Certainly you wouldn't want to make the contents of `config.json` visible to the outside world.
-
-You *could* remove the file from source control and send the file to everyone in your team every time you update the file, but this approach is very cumbersome. Instead, you can use node-cipher to encrypt the file and add the encrypted version to source control. This can later be decrypted by each team member independently with a password that you provide. Every time you or one of your team members makes a change to `config.json`, just re-encrypt the file and commit. It's that easy!
-
-Don't forget to add the original `config.json` file to `.gitignore`!
 
 ***
+
+
+
+What is it?
+-----------
+
+`node-cipher` is both a command line tool and a Node JS API which allows you to easily encrypt or decrypt files containing sensitive information. In doing so, you can safely add encrypted files to a public repository, even if they contain sensitive API keys and passwords.
+
+
+
+
+Why use it?
+-----------
+
+As an individual, you may desire to share a personal repository publicly on GitHub or BitBucket, but some config files or environment variables contain sensitive information like API keys and passwords. Instead of removing this file from source control entirely, you could instead scramble the contents of the file using `node-cipher` and commit the encrypted file. This way, you only have to decrypt the file when you clone the repository, instead of having to re-write the file from scratch.
+
+This is also applicable in team settings; Even if a repository is private, enhanced security for sensitive files may still be desired. Simply disclose the encryption information with your team members, and they can decrypt the necessary files when they clone the repository. If any changes are made to these files, simply re-encrypt and commit the changes.
+
+Just remember to add the unencrypted file to `.gitignore`!
+
+
+
+
+How does it work?
+-----------------
+
+There is a two-step process, wherein an encryption key is first derived from the given password and options. Then, this key is used in tandem with the cipher algorithm to create a custom cipher method which is used to encrypt the contents of the chosen file. These encrypted contents are then saved to the desired output file. These two processes are outlined in more detail below.
+
+1. **Password-based key derivation**
+
+  To derive the encryption key, `node-cipher` implements password-based key derivation via the [`crypto.pbkdf2()`][external_crypto_pbkdf2] function. The chosen HMAC digest algorithm (`digest`) is used to derive a key of the requested byte length (`keylen`) from the given password, salt, and iterations.
+
+  It should be noted however that the salt, iterations, byte length, and digest hash all have default values set within the `node-cipher` source code, so it is recommended that for added security these be customized by the end user and kept secret (this is sometimes referred to as a "pepper").
+
+2. **Cipher object generation**
+
+  Once the key has been obtained, `node-cipher` then creates a custom Cipher object using the derived key and the chosen algorithm (`algorithm`) via the [`crypto.createCipher()`][external_crypto_create-cipher] function. In doing so, the cipher key and initialization vector (IV) for the Cipher instance are derived via the OpenSSL function [`EVP_BytesToKey`][external_link_sslbytestokey] and used to encrypt the contents of the given input file. To do this, the contents of the input file are read and piped through this Cipher object which scrambles the contents before being streamed into the desired output file.
+
+
+
+***
+
 
 
 Installation
@@ -34,28 +64,73 @@ $ npm install node-cipher
 ```
 
 
+
 ***
+
 
 
 Documentation
 -------------
 
-The documentation is pretty extensive, and it's split into two pieces.
+The `node-cipher` documentation is rather extensive and thereby is split into two pieces.
 
-**How to use the Command Line Interface**
-[Documentation](https://github.com/nathanbuchar/node-cipher/blob/master/docs/cli.md)
 
-**Using the Node JS API**
-[Documentation](https://github.com/nathanbuchar/node-cipher/blob/master/docs/api.md)
+1. **[Using the Command Line Interface][docs_cli]**
+
+  Documentation on how to use `node-cipher` in the command line.
+
+2. **[Using the Node JS API][docs_api]**
+
+  Documentation on how to use `node-cipher` within Node JS (v4+).
+
 
 
 ***
 
 
+
+Terminology
+-----------
+
+* **Password**
+
+  A string that the final encryption key is derived from. This should be as secure as possible.
+
+
+* **Algorithm**
+
+  A cipher algorithm used in tandem with the derived key to create the cipher function that will be used to encrypt or decrypt the chosen input file. You may use `$ nodecipher --alogrithms` to see a list of available cipher algorithms. Default `cast5-cbc`
+
+
+* **Salt**
+
+  A string used in tandem with the password, byte length, digest, and iterations to derive the encryption key. This should be as unique as possible and it's recommended that salts are random and their lengths are greater than 16 bytes. Default `nodecipher`
+
+
+* **Iterations**
+
+  An integer representing the number of iterations used to derive the key. This is used in tandem with the password, salt, byte length, and digest to derive the encryption key. The higher the number of iterations, the more secure the derived key will be, but the longer it will take to complete. Default `1000`
+
+
+* **Byte Length**
+
+  An integer representing the desired byte length for the derived key. This is used in tandem with the password, salt, digest, and iterations to derive the encryption key. Default `512`
+
+
+* **Digest**
+
+  An HMAC digest algorithm that will be used in tandem with the password, salt, byten length, and iterations to derive the key. You may use `$ nodecipher --hashes` to see a list of available HMAC hashes. Default `sha1`
+
+
+
+***
+
+
+
 Debugging
 ---------
 
-Node-cipher implements [debug](https://github.com/visionmedia/debug) for development logging. To set up node-cipher with debug, set the following environment variables:
+Node-cipher implements [debug][external_package_debug] for development logging. To configure node-cipher with debug, set the `DEBUG` environment to `nodecipher:*` by performing the following:
 
 **Mac OS:**
 ```bash
@@ -68,14 +143,46 @@ $ set DEBUG=nodecipher:*
 ```
 
 
+
 ***
+
 
 
 Authors
 -------
-* [Nathan Buchar](mailto:hello@nathanbuchar.com)
+* [Nathan Buchar]
 
 
 License
 -------
 MIT
+
+
+
+
+
+
+
+
+[section_what]: #what-is-it
+[section_why]: #why-use-it
+[section_how]: #how-does-it-work
+[section_terms]: #terminology
+[section_installation]: #installation
+[section_documentation]: #documentation
+[section_debugging]: #debugging
+[section_authors]: #authors
+[section_license]: #license
+
+[docs_cli]: ./docs/using-the-command-line-interface.md
+[docs_api]: ./docs/using-the-node-js-api.md
+
+[external_package_node-cipher]: https://npmjs.com/package/node-cipher
+[external_package_debug]: https://npmjs.com/package/debug
+
+[external_crypto_create-cipher]: https://nodejs.org/api/crypto.html#crypto_crypto_createcipher_algorithm_password
+[external_crypto_pbkdf2]: https://nodejs.org/api/crypto.html#crypto_crypto_pbkdf2_password_salt_iterations_keylen_digest_callback
+
+[external_link_sslbytestokey]: https://www.openssl.org/docs/manmaster/crypto/EVP_BytesToKey.html
+
+[Nathan Buchar]: mailto:hello@nathanbuchar.com
