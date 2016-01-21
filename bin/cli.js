@@ -7,6 +7,7 @@ let program = require('commander');
 
 let Package = require('../package.json');
 let cipher = require('./actions/cipher');
+let chalk = require('chalk');
 
 let nodecipher = require('../');
 
@@ -69,9 +70,14 @@ _.each(['encrypt', 'decrypt'], command => {
      * This is the password that will be used to derive the encryption key. If
      * the password is not provided, the user will be asked to provide one, as
      * it is required.
+     *
+     * NOTE: For security reasons, it is recommended that you do not define the
+     * password as part of the command. Omit the `--password` option and
+     * `node-cipher` will prompt you for it separately via inquirer. This way,
+     * the password is not exposed as part of your command history.
      */
     .option(
-      '-p, --password <value>',
+      '-p, --password [value]',
       'the password that we will derive a key from'
     )
 
@@ -150,6 +156,15 @@ _.each(['encrypt', 'decrypt'], command => {
      * Define command action.
      */
     .action((input, output, options) => {
+      if (!_.isUndefined(options.password)) {
+        console.log(chalk.yellow(
+          '\nFor security reasons, the password should not be defined as ' +
+          'part of the command. In the future, you should omit the ' +
+          '`--password` option and node-cipher will prompt you for it ' +
+          'separately. This is more secure, as it will not expose the ' +
+          'password within your command history :).'
+        ));
+      }
       cipher(command, input, output, options);
     });
 });
