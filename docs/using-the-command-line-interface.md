@@ -62,7 +62,7 @@ Options
 
 | Flag           | Alias |   Type    | Description                   | Default |
 | :------------- | :---: | :-------: | :---------------------------- | :-----: |
-| `--password`   | `-p`  | `string`  | The password used to derive the encryption key. If a password is not provided by the user via the `-p` flag, they will be prompted to provide one via [inquirer][external_package_inquirer]. ||
+| `--password`   | `-p`  | `string`  | The password used to derive the encryption key. **For security reasons, it is recommended that you do not define the password as part of the command. Omit the `--password` option and `node-cipher` will prompt you for it separately via [inquirer][external_package_inquirer]. This way, the password is not exposed as part of your command history.** ||
 | `--algorithm`  | `-a`  | `string`  | The cipher algorithm to use when encrypting or decrypting the input file. Use `$ nodecipher --algorithms` to see a list of available cipher algorithms. | `cast5-cbc` |
 | `--salt`       | `-s`  | `string`  | The salt used to derive the encryption key. This should be as unique as possible. It is recommended that salts are random and their lengths are greater than 16 bytes. | `nodecipher` |
 | `--iterations` | `-r`  | `number`  | The number of iterations used to derive the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete. | `1000` |
@@ -82,28 +82,45 @@ Options
 Examples
 --------
 
-1. Encrypts the contents of `config.json` using `passw0rd` as the password, then saves the decrypted contents to a file named `config.json.cast5`. This is the basic use case.
+1. Encrypts the contents of `config.json` using default settings, then saves the decrypted contents to a file named `config.json.cast5`. This is the basic use case.
 
     ```bash
-    $ nodecipher encrypt "config.json" "config.json.cast5" -p "passw0rd"
+    $ nodecipher encrypt "config.json" "config.json.cast5"
+
+    ? Enter the password ********
+
+    # Success: config.json > config.json.cast5
     ```
 
-2. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt, then saves the decrypted contents to a file named `config.json.cast5`.
+2. Encrypts the contents of `config.json` using a custom salt, then saves the decrypted contents to a file named `config.json.cast5`.
 
     ```bash
-    $ nodecipher encrypt "config.json" "config.json.cast5" -p "passw0rd" -s "alakazam"
+    $ nodecipher encrypt "config.json" "config.json.cast5" -s "alakazam"
+
+    ? Enter the password ********
+
+    # Success: config.json > config.json.cast5
     ```
 
-3. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt, algorithm, digest, and byte length, then saves the decrypted contents to a file named `config.json.aes128`. This is an advanced use case.
+3. Encrypts the contents of `config.json` using a custom salt, algorithm, digest, and byte length, then saves the decrypted contents to a file named `config.json.aes128`. This is an advanced use case.
 
     ```bash
-    $ nodecipher enc "config.json" "config.json.aes128" -p "passw0rd" -a "aes-128-cbc" -s "alakazam" -l 1024 -d "sha512"
+    $ nodecipher enc "config.json" "config.json.aes128" -a "aes-128-cbc" -s "alakazam" -l 1024 -d
+     "sha512"
+
+    ? Enter the password ********
+
+     # Success: config.json > config.json.aes128
     ```
 
-4. Decrypts the contents of `config.json.cast5` using `passw0rd` as the password and custom iterations, then saves the decrypted contents back to a file named `config.json`.
+4. Decrypts the contents of `config.json.cast5` using custom iterations, then saves the decrypted contents back to a file named `config.json`.
 
     ```bash
-    $ nodecipher dec "config.json.cast5" "config.json" -p "passw0rd" -i 100000
+    $ nodecipher dec "config.json.cast5" "config.json" -i 100000
+
+    ? Enter the password ********
+
+    # Success: config.json.cast5 > config.json
     ```
 
 
