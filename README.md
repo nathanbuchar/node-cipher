@@ -39,7 +39,6 @@ There is a two-step process, wherein an encryption key is first derived from the
   To derive the encryption key, `node-cipher` implements password-based key derivation via the [`crypto.pbkdf2`][external_crypto_pbkdf2] function. The chosen HMAC digest algorithm (`digest`, `-d`) is used to derive a key of the requested byte length (`keylen`, `-l`) from the given password (`password`, `-p`), salt (`salt`, `-s`), and iterations (`iterations`, `-i`).
 
   It should be noted however that the salt, iterations, byte length, and digest hash all have default values set within the `node-cipher` source code, so it is recommended that for added security these be customized by the end user and kept secret (this is sometimes referred to as a "pepper"). For basic usage, you really only need to set the password.
-
 2. **Cipher object generation**
 
   Once the key has been obtained, `node-cipher` then creates a custom Cipher object using the derived key and the chosen algorithm (`algorithm`, `-a`) via the [`crypto.createCipher`][external_crypto_create-cipher] function. In doing so, the cipher key and initialization vector (IV) for the Cipher instance are derived via the OpenSSL function [`EVP_BytesToKey`][external_link_sslbytestokey] and are used to encrypt the contents of the given input file. To do this, the contents of the input file are read and piped through this Cipher object which scrambles the contents before streaming them into the desired output file.

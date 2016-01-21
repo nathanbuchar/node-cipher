@@ -63,10 +63,10 @@ function parseOptions(options) {
 function cipher(command, input, output, options) {
   if (_.isUndefined(options.password)) {
     prompForPassword(password => {
-      cipher(command, input, output, options, _.assign(password, options));
+      cipher(command, input, output, options, _.assign(options, { password }));
     });
   } else {
-    let opts = _.assign({ input, output }, parseOptions(options));
+    let opts = _.assign(parseOptions(options), { input, output });
 
     nodecipher[command](opts, err => {
       handleCipher(opts, err);
