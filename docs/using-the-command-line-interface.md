@@ -1,7 +1,7 @@
 Using the Command Line Interface
 ================================
 
-[Take me back to the README][README].
+[Click here][README] to return to the README.
 
 
 
@@ -49,10 +49,10 @@ When in doubt, `$ nodecipher --help`
 Commands
 --------
 
-|Command|Alias|Description|
-|:------|:---:|:----------|
-|`encrypt`|`enc`|Encrypts the input file using the options provided. See [options][section_options].|
-|`decrypt`|`dec`|Decrypts the input file using the options provided. See [options][section_options].|
+| Command   | Alias | Description                                              |
+| :-------- | :---: | :------------------------------------------------------- |
+| `encrypt` | `enc` | Encrypts the input file using the options provided. See [options][section_options]. |
+| `decrypt` | `dec` | Decrypts the input file using the options provided. See [options][section_options]. |
 
 
 
@@ -60,18 +60,18 @@ Commands
 Options
 -----
 
-|Flag|Alias|Type|Description|Default|
-|:---|:---:|:--:|:----------|:-----:|
-|`--help`|`-h`|`boolean`|Output usage information.|
-|`--password`|`-p`|`string`|The password used to derive the encryption key. If a password is not provided by the user via the `-p` flag, they will be prompted to provide one via [inquirer][external_package_inquirer].||
-|`--algorithm`|`-a`|`string`|The cipher algorithm to use when encrypting or decrypting the input file. Use `$ nodecipher --algorithms` to see a list of available cipher algorithms.|`cast5-cbc`|
-|`--salt`|`-s`|`string`|The salt used to derive the encryption key. This should be as unique as possible. It is recommended that salts are random and their lengths are greater than 16 bytes.|`nodecipher`|
-|`--iterations`|`-r`|`number`|The number of iterations used to derive the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete.|`1000`|
-|`--keylen`|`-l`|`number`|The desired byte length for the derived key.|`512`|
-|`--digest`|`-d`|`string`|The HMAC digest algorithm used to derive the key. Use `$ nodecipher --hashes` to see a list of available HMAC hashes.|`"sha1"`|
-|`--algorithms`|`-L`|`boolean`|Outputs a list of all available cipher algorithms.|
-|`--hashes`|`-H`|`boolean`|Outputs a list of all available HMAC hashes.|
-|`--version`|`-V`|`boolean`|Output the version number.|
+| Flag           | Alias |   Type    | Description                   | Default |
+| :------------- | :---: | :-------: | :---------------------------- | :-----: |
+| `--password`   | `-p`  | `string`  | The password used to derive the encryption key. If a password is not provided by the user via the `-p` flag, they will be prompted to provide one via [inquirer][external_package_inquirer]. ||
+| `--algorithm`  | `-a`  | `string`  | The cipher algorithm to use when encrypting or decrypting the input file. Use `$ nodecipher --algorithms` to see a list of available cipher algorithms. | `cast5-cbc` |
+| `--salt`       | `-s`  | `string`  | The salt used to derive the encryption key. This should be as unique as possible. It is recommended that salts are random and their lengths are greater than 16 bytes. | `nodecipher` |
+| `--iterations` | `-r`  | `number`  | The number of iterations used to derive the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete. | `1000` |
+| `--keylen`     | `-l`  | `number`  | The desired byte length for the derived key. | `512` |
+| `--digest`     | `-d`  | `string`  | The HMAC digest algorithm used to derive the key. Use `$ nodecipher --hashes` to see a list of available HMAC hashes. | `"sha1"` |
+| `--algorithms` | `-L`  | `boolean` | Outputs a list of all available cipher algorithms.||
+| `--hashes`     | `-H`  | `boolean` | Outputs a list of all available HMAC hashes.||
+| `--version`    | `-V`  | `boolean` | Output the version number.||
+| `--help`       | `-h`  | `boolean` | Output usage information.||
 
 
 
@@ -82,7 +82,7 @@ Options
 Examples
 --------
 
-1. Encrypts the contents of `config.json` using `passw0rd` as the password, then saves the decrypted contents to a file named `config.json.cast5`.
+1. Encrypts the contents of `config.json` using `passw0rd` as the password, then saves the decrypted contents to a file named `config.json.cast5`. This is the basic use case.
 
     ```bash
     $ nodecipher encrypt "config.json" "config.json.cast5" -p "passw0rd"
@@ -94,7 +94,7 @@ Examples
     $ nodecipher encrypt "config.json" "config.json.cast5" -p "passw0rd" -s "alakazam"
     ```
 
-3. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt, algorithm, digest, and byte length, then saves the decrypted contents to a file named `config.json.aes128`.
+3. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt, algorithm, digest, and byte length, then saves the decrypted contents to a file named `config.json.aes128`. This is an advanced use case.
 
     ```bash
     $ nodecipher enc "config.json" "config.json.aes128" -p "passw0rd" -a "aes-128-cbc" -s "alakazam" -l 1024 -d "sha512"
@@ -138,7 +138,7 @@ If you have installed `node-cipher` locally, NPM will automatically prefer the b
 
 
 [root]: ../
-[README]: ../blob/master/README.md
+[README]: ../README.md
 
 [section_installation]: #installation
 [section_usage]: #usage

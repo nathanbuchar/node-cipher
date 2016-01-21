@@ -1,7 +1,7 @@
 Using the Node JS API
 =====================
 
-[Take me back to the README][README].
+[Click here][README] to return to the README.
 
 
 
@@ -49,15 +49,15 @@ There are several public methods available via the Node JS API: [`encrypt`][meth
 
 **`encrypt(options[, callback[, scope]])`**
 
-This method asynchronously encrypts the chosen input file using the [options][section_options] provided, and then saves the encrypted content to the chosen output file.
+This method asynchronously encrypts the chosen input file using the [options][section_options] provided and then saves the encrypted content to the chosen output file.
 
 
 #### Parameters
-|Parameter|Type|Description|Required|
-|--------:|:--:|:----------|:------:|
-|`options`|`Object`|The options object. See [options][section_options].|✓|
-|`callback`|`Function`|The function to call when the encryption has completed.||
-|`scope`|`Object`|The scope for the `callback` function parameter, if provided.||
+|  Parameter |    Type    | Description                             | Required |
+| ---------: | :--------: | :-------------------------------------- | :------: |
+|  `options` |  `Object`  | The options object. See [options][section_options]. | ✓ |
+| `callback` | `Function` | The function to call when the decryption has completed. | |
+|    `scope` |  `Object`  | The scope for the `callback` function parameter, if provided. | |
 
 #### Example
 The following example demonstrates encrypting the contents of `config.json` using `passw0rd` as the password, then saving the encrypted contents to a file named `config.json.cast5`.
@@ -85,9 +85,9 @@ nodecipher.encrypt({
 This is the synchronous version of [`encrypt()`][method_encrypt]. This method does not accept the `callback` and `scope` parameters, as they are not necessary for synchronous code.
 
 #### Parameters
-|Parameter|Type|Description|Required|
-|--------:|:--:|:----------|:------:|
-|`options`|`Object`|The options object. See [options][section_options].|✓|
+| Parameter |   Type   | Description                                | Required |
+| --------: | :------: | :----------------------------------------- | :------: |
+| `options` | `Object` | The options object. See [options][section_options]. | ✓ |
 
 #### Example
 The following example demonstrates synchronously encrypting the contents of `config.json` using `passw0rd` as the password, then saving the encrypted contents to a file named `config.json.cast5`.
@@ -108,14 +108,14 @@ nodecipher.encryptSync({
 
 **`decrypt(options[, callback[, scope]])`**
 
-This method asynchronously decrypts the chosen input file using the [options][section_options] provided, and then saves the decrypted content to the chosen output file.
+This method asynchronously decrypts the chosen input file using the [options][section_options] provided and then saves the decrypted content to the chosen output file.
 
 #### Parameters
-|Parameter|Type|Description|Required|
-|--------:|:--:|:----------|:------:|
-|`options`|`Object`|The options object. See [options][section_options].|✓|
-|`callback`|`Function`|The function to call when the decryption has completed.||
-|`scope`|`Object`|The scope for the `callback` function parameter, if provided.||
+|  Parameter |    Type    | Description                             | Required |
+| ---------: | :--------: | :-------------------------------------- | :------: |
+|  `options` |  `Object`  | The options object. See [options][section_options]. | ✓ |
+| `callback` | `Function` | The function to call when the decryption has completed. ||
+|    `scope` |  `Object`  | The scope for the `callback` function parameter, if provided. ||
 
 #### Example
 The following example demonstrates decrypting the contents of `config.json.cast5` using `passw0rd` as the password, then saving the decrypted contents back to a file named `config.json`.
@@ -143,9 +143,9 @@ nodecipher.decrypt({
 This is the synchronous version of [`decrypt()`][method_decrypt]. This method does not accept the `callback` and `scope` parameters, as they are not necessary for synchronous code.
 
 #### Parameters
-|Parameter|Type|Description|Required|
-|--------:|:--:|:----------|:------:|
-|`options`|`Object`|The options object. See [options][section_options].|✓|
+| Parameter |   Type   | Description                                | Required |
+| --------: | :------: | :----------------------------------------- | :------: |
+| `options` | `Object` | The options object. See [options][section_options]. | ✓ |
 
 #### Example
 The following example demonstrates synchronously decrypting the contents of `config.json.cast5` using `passw0rd` as the password, then saving the decrypted contents back to a file named `config.json`.
@@ -203,16 +203,16 @@ console.log(hashes); // ['sha', 'sha1', 'sha1WithRSAEncryption', ...]
 Options
 -------
 
-|Name|Type|Description|Required|Default|
-|:---|:--:|:----------|:------:|:-----:|
-|`input`|`string`|The file that you wish to encrypt or decrypt.|✓||
-|`output`|`string`|The file that you wish to save the encrypted or decrypted contents to. This file does not necessarily need to exist beforehand.|✓||
-|`password`|`string`|The password used to derive the encryption key.|✓||
-|`algorithm`|`string`|The algorithm used in tandem with the derived key to create the cipher function that will be used to encrypt or decrypt the input file. Use [`listAlgorithms()`][method_list-algorithms] to see a list of available cipher algorithms.||`cast5cbc"`|
-|`salt`|`string`|The salt used to derive the encryption key. This should be as unique as possible. It is recommended that salts are random and their lengths are greater than 16 bytes.||`nodecipher`|
-|`iterations`|`number`|The number of iterations used to derive the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete.||`1000`|
-|`keylen`|`number`|The desired byte length for the derived key.||`512`|
-|`digest`|`string`|The HMAC digest algorithm used to derive the key. Use [`listHashes()`][method_list-hashes] to see a list of available HMAC hashes.||`sha1`|
+| Name        | Type     | Description                    | Required | Default |
+| :---------- | :------: | :----------------------------- | :------: | :-----: |
+| `input`     | `string` | The file that you wish to encrypt or decrypt. | ✓ ||
+| `output`    | `string` | The file that you wish to save the encrypted or decrypted contents to. This file does not necessarily need to exist beforehand. | ✓ ||
+| `password`  | `string` | The password used to derive the encryption key.| ✓ ||
+| `algorithm` | `string` | The algorithm used in tandem with the derived key to create the cipher function that will be used to encrypt or decrypt the input file. Use [`listAlgorithms()`][method_list-algorithms] to see a list of available cipher algorithms.|| `cast5cbc"` |
+| `salt`      | `string` | The salt used to derive the encryption key. This should be as unique as possible. It is recommended that salts are random and their lengths are greater than 16 bytes.|| `nodecipher` |
+| `iterations`| `number` | The number of iterations used to derive the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete.|| `1000` |
+| `keylen`    | `number` | The desired byte length for the derived key.|| `512` |
+| `digest`    | `string` | The HMAC digest algorithm used to derive the key. Use [`listHashes()`][method_list-hashes] to see a list of available HMAC hashes.|| `sha1` |
 
 
 
@@ -223,7 +223,7 @@ Options
 Examples
 --------
 
-1. Encrypts the contents of `config.json` using `passw0rd` as the password, then saves the decrypted contents to a file named `config.json.cast5`.
+1. Encrypts the contents of `config.json` using `passw0rd` as the password, then saves the decrypted contents to a file named `config.json.cast5`. This is the basic use case.
 
     ```js
     let nodecipher = require('node-cipher');
@@ -256,7 +256,7 @@ Examples
     });
     ```
 
-3. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt, algorithm, digest, and byte length, then saves the decrypted contents to a file named `config.json.aes128`.
+3. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt, algorithm, digest, and byte length, then saves the decrypted contents to a file named `config.json.aes128`. This is an advanced use case.
 
     ```js
     let nodecipher = require('node-cipher');
@@ -297,7 +297,7 @@ Examples
 
 
 [root]: ../
-[README]: ../blob/master/README.md
+[README]: ../README.md
 
 [section_installation]: #installation
 [section_options]: #options
