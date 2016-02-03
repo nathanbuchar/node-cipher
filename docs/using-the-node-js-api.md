@@ -208,7 +208,7 @@ Options
 | `input`     | `string` | The file that you wish to encrypt or decrypt. | ✓ ||
 | `output`    | `string` | The file that you wish to save the encrypted or decrypted contents to. This file does not necessarily need to exist beforehand. | ✓ ||
 | `password`  | `string` | The password used to derive the encryption key.| ✓ ||
-| `algorithm` | `string` | The algorithm used in tandem with the derived key to create the cipher function that will be used to encrypt or decrypt the input file. Use [`listAlgorithms()`][method_list-algorithms] to see a list of available cipher algorithms.|| `cast5cbc"` |
+| `algorithm` | `string` | The algorithm used in tandem with the derived key to create the cipher function that will be used to encrypt or decrypt the input file. Use [`listAlgorithms()`][method_list-algorithms] to see a list of available cipher algorithms.|| `cast5cbc` |
 | `salt`      | `string` | The salt used to derive the encryption key. This should be as unique as possible. It is recommended that salts are random and their lengths are greater than 16 bytes.|| `nodecipher` |
 | `iterations`| `number` | The number of iterations used to derive the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete.|| `1000` |
 | `keylen`    | `number` | The desired byte length for the derived key.|| `512` |
