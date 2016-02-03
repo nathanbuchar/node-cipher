@@ -102,7 +102,7 @@ Terminology
 
 * **Salt**
 
-  A string used in tandem with the password, byte length, digest, and iterations to derive the encryption key. This should be as unique as possible and it's recommended that salts are random and their lengths are greater than 16 bytes. **Hexes and Buffers not yet supported**. Default `nodecipher`
+  A string or buffer used in tandem with the password, byte length, digest, and iterations to derive the encryption key. This should be as unique as possible and it's recommended that salts are random and their lengths are greater than 16 bytes. Default `nodecipher`
 
 
 * **Iterations**

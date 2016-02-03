@@ -203,16 +203,16 @@ console.log(hashes); // ['sha', 'sha1', 'sha1WithRSAEncryption', ...]
 Options
 -------
 
-| Name        | Type     | Description                    | Required | Default |
-| :---------- | :------: | :----------------------------- | :------: | :-----: |
-| `input`     | `string` | The file that you wish to encrypt or decrypt. | ✓ ||
-| `output`    | `string` | The file that you wish to save the encrypted or decrypted contents to. This file does not necessarily need to exist beforehand. | ✓ ||
-| `password`  | `string` | The password used to derive the encryption key.| ✓ ||
-| `algorithm` | `string` | The algorithm used in tandem with the derived key to create the cipher function that will be used to encrypt or decrypt the input file. Use [`listAlgorithms()`][method_list-algorithms] to see a list of available cipher algorithms.|| `cast5cbc` |
-| `salt`      | `string` | The salt used to derive the encryption key. This should be as unique as possible. It is recommended that salts are random and their lengths are greater than 16 bytes.|| `nodecipher` |
-| `iterations`| `number` | The number of iterations used to derive the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete.|| `1000` |
-| `keylen`    | `number` | The desired byte length for the derived key.|| `512` |
-| `digest`    | `string` | The HMAC digest algorithm used to derive the key. Use [`listHashes()`][method_list-hashes] to see a list of available HMAC hashes.|| `sha1` |
+| Name        |      Type       | Description              | Required | Default |
+| :---------- | :-------------: | :----------------------- | :------: | :-----: |
+| `input`     |    `string`     | The file that you wish to encrypt or decrypt. | ✓ ||
+| `output`    |    `string`     | The file that you wish to save the encrypted or decrypted contents to. This file does not necessarily need to exist beforehand. | ✓ ||
+| `password`  |    `string`     | The password used to derive the encryption key.| ✓ ||
+| `algorithm` |    `string`     | The algorithm used in tandem with the derived key to create the cipher function that will be used to encrypt or decrypt the input file. Use [`listAlgorithms()`][method_list-algorithms] to see a list of available cipher algorithms.|| `cast5cbc` |
+| `salt`      | `string|Buffer` | The salt used to derive the encryption key. This should be as unique as possible. It is recommended that salts are random and their lengths are greater than 16 bytes.|| `nodecipher` |
+| `iterations`|    `number`     | The number of iterations used to derive the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete.|| `1000` |
+| `keylen`    |    `number`     | The desired byte length for the derived key.|| `512` |
+| `digest`    |    `string`     | The HMAC digest algorithm used to derive the key. Use [`listHashes()`][method_list-hashes] to see a list of available HMAC hashes.|| `sha1` |
 
 
 
@@ -256,7 +256,26 @@ Examples
     });
     ```
 
-3. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt, algorithm, digest, and byte length, then saves the decrypted contents to a file named `config.json.aes128`. This is an advanced use case.
+3. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt as a Buffer, then saves the decrypted contents to a file named `config.json.cast5`.
+
+    ```js
+    let nodecipher = require('node-cipher');
+
+    let saltBuffer = require('crypto').randomBytes(32);
+
+    nodecipher.encrypt({
+      input: 'config.json',
+      output: 'config.json.cast5',
+      password: 'passw0rd',
+      salt: saltBuffer
+    }, function (err) {
+      if (err) throw err;
+
+      console.log('It worked!');
+    });
+    ```
+
+4. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt, algorithm, digest, and byte length, then saves the decrypted contents to a file named `config.json.aes128`. This is an advanced use case.
 
     ```js
     let nodecipher = require('node-cipher');
@@ -276,7 +295,7 @@ Examples
     });
     ```
 
-4. Synchronously decrypts the contents of `config.json.cast5` using `passw0rd` as the password and custom iterations, then saves the decrypted contents back to a file named `config.json`.
+5. Synchronously decrypts the contents of `config.json.cast5` using `passw0rd` as the password and custom iterations, then saves the decrypted contents back to a file named `config.json`.
 
     ```js
     let nodecipher = require('node-cipher');
