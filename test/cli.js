@@ -30,6 +30,8 @@ let should = chai.should();
 
 describe('Flags', function () {
 
+  this.timeout(5000);
+
   /**
    * Test specs for help.
    *
@@ -155,6 +157,8 @@ describe('Flags', function () {
 });
 
 describe('Commands', function () {
+
+  this.timeout(5000);
 
   /**
    * Declare tmp files and content.

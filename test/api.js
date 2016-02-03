@@ -96,6 +96,8 @@ after('remove tmp directory', function () {
 
 describe('Options', function () {
 
+  this.timeout(5000);
+
   it('should fail if no options are provided', function () {
     try {
       nodecipher.encryptSync();
@@ -321,6 +323,8 @@ describe('Options', function () {
 });
 
 describe('Methods', function () {
+
+  this.timeout(5000);
 
   /**
    * Test specs for encrypt().
