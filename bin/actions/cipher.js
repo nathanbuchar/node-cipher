@@ -17,14 +17,16 @@ let nodecipher = require('../../');
  * @param {Function} done
  */
 function prompForPassword(done) {
-  inquirer.prompt([{
-    type: 'password',
-    message: 'Enter the password',
-    name: 'password',
-    validate(input) {
-      return input.length > 0;
+  inquirer.prompt([
+    {
+      type: 'password',
+      message: 'Enter the password',
+      name: 'password',
+      validate(input) {
+        return input.length > 0;
+      }
     }
-  }], answers => {
+  ], answers => {
     done(answers.password);
   });
 }
@@ -34,7 +36,7 @@ function prompForPassword(done) {
  * accepted by NodeCipher.
  *
  * @param {Object} options
- * @returns {Object} opts;
+ * @returns {Object} opts
  */
 function parseOptions(options) {
   let opts = {};
