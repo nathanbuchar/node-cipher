@@ -68,7 +68,7 @@ Options
 | `--iterations` | `-r`  | `number`  | The number of iterations used to derive the key. The higher the number of iterations, the more secure the derived key will be, but will take a longer amount of time to complete. | `1000` |
 | `--keylen`     | `-l`  | `number`  | The desired byte length for the derived key. | `512` |
 | `--digest`     | `-d`  | `string`  | The HMAC digest algorithm used to derive the key. Use `$ nodecipher --hashes` to see a list of available HMAC hashes. | `"sha1"` |
-| `--algorithms` | `-L`  | `boolean` | Outputs a list of all available cipher algorithms.||
+| `--algorithms` | `-A`  | `boolean` | Outputs a list of all available cipher algorithms.||
 | `--hashes`     | `-H`  | `boolean` | Outputs a list of all available HMAC hashes.||
 | `--version`    | `-V`  | `boolean` | Output the version number.||
 | `--help`       | `-h`  | `boolean` | Output usage information.||
@@ -89,7 +89,7 @@ Examples
 
     ? Enter the password ********
 
-    # Success: config.json > config.json.cast5
+    # Success: config.json → config.json.cast5
     ```
 
 2. Encrypts the contents of `config.json` using a custom salt, then saves the decrypted contents to a file named `config.json.cast5`.
@@ -99,7 +99,7 @@ Examples
 
     ? Enter the password ********
 
-    # Success: config.json > config.json.cast5
+    # Success: config.json → config.json.cast5
     ```
 
 3. Encrypts the contents of `config.json` using a custom salt, algorithm, digest, and byte length, then saves the decrypted contents to a file named `config.json.aes128`. This is an advanced use case.
@@ -110,7 +110,7 @@ Examples
 
     ? Enter the password ********
 
-     # Success: config.json > config.json.aes128
+     # Success: config.json → config.json.aes128
     ```
 
 4. Decrypts the contents of `config.json.cast5` using custom iterations, then saves the decrypted contents back to a file named `config.json`.
@@ -120,7 +120,7 @@ Examples
 
     ? Enter the password ********
 
-    # Success: config.json.cast5 > config.json
+    # Success: config.json.cast5 → config.json
     ```
 
 

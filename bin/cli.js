@@ -184,22 +184,25 @@ _.each(['encrypt', 'decrypt'], command => {
 program.parse(process.argv);
 
 /**
- * Handle list algorithms.
+ * Handle list algorithms and end processing.
  */
 if (program.algorithms) {
   console.log(nodecipher.listAlgorithms().join('\n'));
+  return;
 }
 
 /**
- * Handle list hashes.
+ * Handle list hashes and end processing.
  */
 if (program.hashes) {
   console.log(nodecipher.listHashes().join('\n'));
+  return;
 }
 
 /**
- * Handle no input (show help).
+ * Handle no input (show help) and end processing.
  */
 if (!process.argv.slice(2).length) {
   program.outputHelp();
+  return;
 }

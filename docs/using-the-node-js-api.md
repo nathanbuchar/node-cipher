@@ -69,7 +69,7 @@ nodecipher.encrypt({
   input: 'config.json',
   output: 'config.json.cast5',
   password: 'passw0rd'
-}, function (err) {
+}, function (err, opts) {
   if (err) throw err;
 
   console.log('It worked!');
@@ -80,7 +80,7 @@ nodecipher.encrypt({
 
 ### encryptSync()
 
-**`encryptSync(options)`**
+**`encryptSync(options):Object`**
 
 This is the synchronous version of [`encrypt()`][method_encrypt]. This method does not accept the `callback` and `scope` parameters, as they are not necessary for synchronous code.
 
@@ -95,7 +95,7 @@ The following example demonstrates synchronously encrypting the contents of `con
 ```js
 let nodecipher = require('node-cipher');
 
-nodecipher.encryptSync({
+let opts = nodecipher.encryptSync({
   input: 'config.json',
   output: 'config.json.cast5',
   password: 'passw0rd'
@@ -127,7 +127,7 @@ nodecipher.decrypt({
   input: 'config.json.cast5',
   output: 'config.json',
   password: 'passw0rd'
-}, function (err) {
+}, function (err, opts) {
   if (err) throw err;
 
   console.log('It worked!');
@@ -138,7 +138,7 @@ nodecipher.decrypt({
 
 ### decryptSync()
 
-**`decryptSync(options)`**
+**`decryptSync(options):Object`**
 
 This is the synchronous version of [`decrypt()`][method_decrypt]. This method does not accept the `callback` and `scope` parameters, as they are not necessary for synchronous code.
 
@@ -153,7 +153,7 @@ The following example demonstrates synchronously decrypting the contents of `con
 ```js
 let nodecipher = require('node-cipher');
 
-nodecipher.decryptSync({
+let opts = nodecipher.decryptSync({
   input: 'config.json.cast5',
   output: 'config.json',
   password: 'passw0rd'
@@ -232,7 +232,7 @@ Examples
       input: 'config.json',
       output: 'config.json.cast5',
       password: 'passw0rd'
-    }, function (err) {
+    }, function (err, opts) {
       if (err) throw err;
 
       console.log('It worked!');
@@ -249,7 +249,7 @@ Examples
       output: 'config.json.cast5',
       password: 'passw0rd',
       salt: 'alakazam'
-    }, function (err) {
+    }, function (err, opts) {
       if (err) throw err;
 
       console.log('It worked!');
@@ -268,7 +268,7 @@ Examples
       output: 'config.json.cast5',
       password: 'passw0rd',
       salt: saltBuffer
-    }, function (err) {
+    }, function (err, opts) {
       if (err) throw err;
 
       console.log('It worked!');
@@ -288,7 +288,7 @@ Examples
       salt: 'alakazam',
       keylen: 1024,
       digest: 'sha512'
-    }, function (err) {
+    }, function (err, opts) {
       if (err) throw err;
 
       console.log('It worked!');
@@ -300,7 +300,7 @@ Examples
     ```js
     let nodecipher = require('node-cipher');
 
-    nodecipher.decryptsync({
+    let opts = nodecipher.decryptsync({
       input: 'config.json.cast5',
       output: 'config.json',
       password: 'passw0rd',

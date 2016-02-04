@@ -118,7 +118,7 @@ describe('Options', function () {
       nodecipher.encrypt({
         output: files[0].name,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"input" is required.');
         done();
@@ -130,7 +130,7 @@ describe('Options', function () {
         input: Array,
         output: files[1].name,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"input" must be a string.');
         done();
@@ -150,7 +150,7 @@ describe('Options', function () {
       nodecipher.encrypt({
         input: files[0].name,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"output" is required.');
         done();
@@ -162,7 +162,7 @@ describe('Options', function () {
         input: files[0].name,
         output: Array,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"output" must be a string.');
         done();
@@ -182,7 +182,7 @@ describe('Options', function () {
       nodecipher.encrypt({
         input: files[0].name,
         output: files[1].name
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"password" is required.');
         done();
@@ -194,7 +194,7 @@ describe('Options', function () {
         input: files[0].name,
         output: files[1].name,
         password: Array
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"password" must be a string.');
         done();
@@ -215,7 +215,7 @@ describe('Options', function () {
         output: files[1].name,
         password: 'alakazam',
         salt: Array
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"salt" must be a string or buffer.');
         done();
@@ -236,7 +236,7 @@ describe('Options', function () {
         output: files[1].name,
         password: 'alakazam',
         iterations: Array
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"iterations" must be an integer.');
         done();
@@ -257,7 +257,7 @@ describe('Options', function () {
         output: files[1].name,
         password: 'alakazam',
         keylen: Array
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"keylen" must be an integer.');
         done();
@@ -278,7 +278,7 @@ describe('Options', function () {
         output: files[1].name,
         password: 'alakazam',
         digest: Array
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"digest" must be a string.');
         done();
@@ -300,7 +300,7 @@ describe('Options', function () {
         output: files[1].name,
         password: 'alakazam',
         algorithm: 'foobar'
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"foobar" is not a valid cipher algorithm.');
         done();
@@ -313,7 +313,7 @@ describe('Options', function () {
         output: files[1].name,
         password: 'alakazam',
         algorithm: Array
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         expect(err.toString()).to.contain('"algorithm" must be a string.');
         done();
@@ -342,8 +342,9 @@ describe('Methods', function () {
         input: files[0].name,
         output: files[1].name,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
         done();
       });
     });
@@ -354,8 +355,9 @@ describe('Methods', function () {
         output: files[1].name,
         password: 'alakazam',
         algorithm: 'aes-128-cbc'
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
         done();
       });
     });
@@ -365,8 +367,9 @@ describe('Methods', function () {
         input: files[0].name,
         output: files[1].name,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
         expect(this).to.equal(undefined);
         done();
       });
@@ -379,8 +382,9 @@ describe('Methods', function () {
         input: files[0].name,
         output: files[1].name,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
         expect(scope).to.equal(scope);
         done();
       }, scope);
@@ -391,8 +395,25 @@ describe('Methods', function () {
         input: 'notarealfile.txt',
         output: files[1].name,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
+        done();
+      });
+    });
+
+    it('should return the final options Object as part of the callback', function (done) {
+      nodecipher.encrypt({
+        input: files[0].name,
+        output: files[1].name,
+        password: 'alakazam'
+      }, function (err, opts) {
+        should.not.exist(err);
+        should.exist(opts);
+        expect(opts).to.be.an('object');
+        expect(opts.input).to.equal(files[0].name);
+        expect(opts.output).to.equal(files[1].name);
+        expect(opts.password).to.equal('alakazam');
+        expect(opts.salt).to.equal(nodecipher.config.salt);
         done();
       });
     });
@@ -443,6 +464,25 @@ describe('Methods', function () {
         should.exist(err);
       }
     });
+
+    it('should return the final options Object', function () {
+      try {
+        let opts = nodecipher.encryptSync({
+          input: files[0].name,
+          output: files[1].name,
+          password: 'alakazam'
+        });
+
+        should.exist(opts);
+        expect(opts).to.be.an('object');
+        expect(opts.input).to.equal(files[0].name);
+        expect(opts.output).to.equal(files[1].name);
+        expect(opts.password).to.equal('alakazam');
+        expect(opts.salt).to.equal(nodecipher.config.salt);
+      } catch (err) {
+        should.not.exist(err);
+      }
+    });
   });
 
   /**
@@ -479,8 +519,9 @@ describe('Methods', function () {
         input: files[1].name,
         output: files[2].name,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -505,8 +546,9 @@ describe('Methods', function () {
         output: files[2].name,
         password: 'alakazam',
         algorithm: 'aes-128-cbc'
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -531,8 +573,9 @@ describe('Methods', function () {
         output: files[2].name,
         password: 'alakazam',
         salt: 'abracadabra'
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -558,8 +601,9 @@ describe('Methods', function () {
         output: files[2].name,
         password: 'alakazam',
         salt: salt
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -584,8 +628,9 @@ describe('Methods', function () {
         output: files[2].name,
         password: 'alakazam',
         iterations: 1001
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -610,8 +655,9 @@ describe('Methods', function () {
         output: files[2].name,
         password: 'alakazam',
         keylen: 256
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -636,8 +682,9 @@ describe('Methods', function () {
         output: files[2].name,
         password: 'alakazam',
         digest: 'sha256'
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -652,8 +699,9 @@ describe('Methods', function () {
         input: files[1].name,
         output: files[2].name,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
         expect(this).to.equal(undefined);
         done();
       });
@@ -666,8 +714,9 @@ describe('Methods', function () {
         input: files[1].name,
         output: files[2].name,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.not.exist(err);
+        should.exist(opts);
         expect(scope).to.equal(scope);
         done();
       }, scope);
@@ -678,7 +727,7 @@ describe('Methods', function () {
         input: files[1].name,
         output: files[2].name,
         password: 'not-alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         done();
       });
@@ -690,7 +739,7 @@ describe('Methods', function () {
         output: files[2].name,
         password: 'alakazam',
         algorithm: 'aes-128-cbc'
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
         done();
       });
@@ -701,8 +750,25 @@ describe('Methods', function () {
         input: 'notarealfile.txt',
         output: files[2].name,
         password: 'alakazam'
-      }, function (err) {
+      }, function (err, opts) {
         should.exist(err);
+        done();
+      });
+    });
+
+    it('should return the final options Object as part of the callback', function (done) {
+      nodecipher.decrypt({
+        input: files[1].name,
+        output: files[2].name,
+        password: 'alakazam'
+      }, function (err, opts) {
+        should.not.exist(err);
+        should.exist(opts);
+        expect(opts).to.be.an('object');
+        expect(opts.input).to.equal(files[1].name);
+        expect(opts.output).to.equal(files[2].name);
+        expect(opts.password).to.equal('alakazam');
+        expect(opts.salt).to.equal(nodecipher.config.salt);
         done();
       });
     });
@@ -926,6 +992,25 @@ describe('Methods', function () {
         });
       } catch (err) {
         should.exist(err);
+      }
+    });
+
+    it('should return the final options Object', function () {
+      try {
+        let opts = nodecipher.decryptSync({
+          input: files[1].name,
+          output: files[2].name,
+          password: 'alakazam'
+        });
+
+        should.exist(opts);
+        expect(opts).to.be.an('object');
+        expect(opts.input).to.equal(files[1].name);
+        expect(opts.output).to.equal(files[2].name);
+        expect(opts.password).to.equal('alakazam');
+        expect(opts.salt).to.equal(nodecipher.config.salt);
+      } catch (err) {
+        should.not.exist(err);
       }
     });
   });
