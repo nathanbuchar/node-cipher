@@ -80,7 +80,7 @@ nodecipher.encrypt({
 
 ### encryptSync()
 
-**`encryptSync(options)`**
+**`encryptSync(options):Object`**
 
 This is the synchronous version of [`encrypt()`][method_encrypt]. This method does not accept the `callback` and `scope` parameters, as they are not necessary for synchronous code.
 
@@ -138,7 +138,7 @@ nodecipher.decrypt({
 
 ### decryptSync()
 
-**`decryptSync(options)`**
+**`decryptSync(options):Object`**
 
 This is the synchronous version of [`decrypt()`][method_decrypt]. This method does not accept the `callback` and `scope` parameters, as they are not necessary for synchronous code.
 
