@@ -1,1 +1,1 @@
-module.exports = require('./lib/cipher');
+module.exports = require('./lib/nodecipher');

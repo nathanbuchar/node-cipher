@@ -184,7 +184,7 @@ function handleUnknownErrors(opts, err) {
  */
 function handleCipherSuccess(opts, err) {
   console.log(chalk.green(
-    '\nSuccess: ' + opts.input + ' > ' + opts.output + '\n'
+    '\nSuccess: ' + opts.input + ' → ' + opts.output + '\n'
   ));
 }
 

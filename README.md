@@ -125,6 +125,27 @@ Terminology
 
 
 
+Using RC
+--------
+
+`node-cipher` v6.2.0 and later implements the configuration loader [rc][external_package_rc] to help you define global encryption options for your project. Simply name the file `.nodecipherrc` and populate with any of the `node-cipher` options defined in the [Node JS API](./docs/using-the-node-js-api.md#options). These options will extend the `node-cipher` defaults and will be applied any time you encrypt or decrypt a file. They can be overridden if you pass in these options directly via the command line or by using the Node JS API.
+
+**Example**
+```json
+{
+  "password": "buffer-zillion-mailman",
+  "salt": "kEPbGpTbuYbk3sb2sQKGqm",
+  "iterations": 100000,
+  "algorithm": "aes-128-cbc"
+}
+```
+
+
+
+***
+
+
+
 Debugging
 ---------
 
@@ -190,6 +211,7 @@ MIT
 
 [external_package_node-cipher]: https://npmjs.com/package/node-cipher
 [external_package_debug]: https://npmjs.com/package/debug
+[external_package_rc]: https://www.npmjs.com/package/rc
 
 [external_crypto_create-cipher]: https://nodejs.org/api/crypto.html#crypto_crypto_createcipher_algorithm_password
 [external_crypto_pbkdf2]: https://nodejs.org/api/crypto.html#crypto_crypto_pbkdf2_password_salt_iterations_keylen_digest_callback
