@@ -253,7 +253,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[0].name + ' > ' + files[1].name);
+        expect(output).to.contain(files[0].name + ' → ' + files[1].name);
         done();
       });
     });
@@ -269,7 +269,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[0].name + ' > ' + files[1].name);
+        expect(output).to.contain(files[0].name + ' → ' + files[1].name);
         done();
       });
     });
@@ -285,7 +285,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[0].name + ' > ' + files[1].name);
+        expect(output).to.contain(files[0].name + ' → ' + files[1].name);
         done();
       });
     });
@@ -301,7 +301,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[0].name + ' > ' + files[1].name);
+        expect(output).to.contain(files[0].name + ' → ' + files[1].name);
         done();
       });
     });
@@ -317,7 +317,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[0].name + ' > ' + files[1].name);
+        expect(output).to.contain(files[0].name + ' → ' + files[1].name);
         done();
       });
     });
@@ -333,7 +333,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[0].name + ' > ' + files[1].name);
+        expect(output).to.contain(files[0].name + ' → ' + files[1].name);
         done();
       });
     });
@@ -379,7 +379,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[1].name + ' > ' + files[2].name);
+        expect(output).to.contain(files[1].name + ' → ' + files[2].name);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -408,7 +408,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[1].name + ' > ' + files[2].name);
+        expect(output).to.contain(files[1].name + ' → ' + files[2].name);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -437,7 +437,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[1].name + ' > ' + files[2].name);
+        expect(output).to.contain(files[1].name + ' → ' + files[2].name);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -466,7 +466,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[1].name + ' > ' + files[2].name);
+        expect(output).to.contain(files[1].name + ' → ' + files[2].name);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -495,7 +495,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[1].name + ' > ' + files[2].name);
+        expect(output).to.contain(files[1].name + ' → ' + files[2].name);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);
@@ -524,7 +524,7 @@ describe('Commands', function () {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
         expect(output).to.contain('Success');
-        expect(output).to.contain(files[1].name + ' > ' + files[2].name);
+        expect(output).to.contain(files[1].name + ' → ' + files[2].name);
 
         fs.readFile(files[2].name, 'utf8', function (err, data) {
           should.not.exist(err);

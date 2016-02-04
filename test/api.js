@@ -120,7 +120,6 @@ describe('Options', function () {
         password: 'alakazam'
       }, function (err) {
         should.exist(err);
-        console.log(err.toString());
         expect(err.toString()).to.contain('"input" is required.');
         done();
       });

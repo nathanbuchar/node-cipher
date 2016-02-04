@@ -12,6 +12,23 @@ let chalk = require('chalk');
 let nodecipher = require('../');
 
 /**
+ * Issues the password security warning, if relevant.
+ *
+ * @param {string} password
+ */
+function issuePasswordSecurityWarning(password) {
+  if (!_.isUndefined(password)) {
+    console.log(chalk.yellow(
+      '\nFor security reasons, the password should not be defined as ' +
+      'part of the command. In the future, you should omit the ' +
+      '`--password` option and node-cipher will prompt you for it ' +
+      'separately. This is more secure, as it will not expose the ' +
+      'password within your command history :).'
+    ));
+  }
+}
+
+/**
  * Define CLI basics.
  */
 program
@@ -156,15 +173,7 @@ _.each(['encrypt', 'decrypt'], command => {
      * Define command action.
      */
     .action((input, output, options) => {
-      if (!_.isUndefined(options.password)) {
-        console.log(chalk.yellow(
-          '\nFor security reasons, the password should not be defined as ' +
-          'part of the command. In the future, you should omit the ' +
-          '`--password` option and node-cipher will prompt you for it ' +
-          'separately. This is more secure, as it will not expose the ' +
-          'password within your command history :).'
-        ));
-      }
+      issuePasswordSecurityWarning(options.password);
       cipher(command, input, output, options);
     });
 });
