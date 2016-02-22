@@ -52,18 +52,18 @@ There are several public methods available via the Node JS API: [`encrypt`][meth
 This method asynchronously encrypts the chosen input file using the [options][section_options] provided and then saves the encrypted content to the chosen output file.
 
 
-#### Parameters
-|  Parameter |    Type    | Description                             | Required |
+#### Arguments
+|       Name |    Type    | Description                             | Required |
 | ---------: | :--------: | :-------------------------------------- | :------: |
 |  `options` |  `Object`  | The options object. See [options][section_options]. | ✓ |
-| `callback` | `Function` | The function to call when the decryption has completed. | |
-|    `scope` |  `Object`  | The scope for the `callback` function parameter, if provided. | |
+| `callback` | `Function` | The function invoked when the encryption finishes. | |
+|    `scope` |  `Object`  | The scope for the `callback` function argument, if it is provided. | |
 
 #### Example
 The following example demonstrates encrypting the contents of `config.json` using `passw0rd` as the password, then saving the encrypted contents to a file named `config.json.cast5`.
 
 ```js
-let nodecipher = require('node-cipher');
+const nodecipher = require('node-cipher');
 
 nodecipher.encrypt({
   input: 'config.json',
@@ -82,10 +82,10 @@ nodecipher.encrypt({
 
 **`encryptSync(options):Object`**
 
-This is the synchronous version of [`encrypt()`][method_encrypt]. This method does not accept the `callback` and `scope` parameters, as they are not necessary for synchronous code.
+This is the synchronous version of [`encrypt()`][method_encrypt]. This method does not accept the `callback` and `scope` arguments, as they are not necessary for synchronous code.
 
-#### Parameters
-| Parameter |   Type   | Description                                | Required |
+#### Arguments
+|      Name |   Type   | Description                                | Required |
 | --------: | :------: | :----------------------------------------- | :------: |
 | `options` | `Object` | The options object. See [options][section_options]. | ✓ |
 
@@ -93,7 +93,7 @@ This is the synchronous version of [`encrypt()`][method_encrypt]. This method do
 The following example demonstrates synchronously encrypting the contents of `config.json` using `passw0rd` as the password, then saving the encrypted contents to a file named `config.json.cast5`.
 
 ```js
-let nodecipher = require('node-cipher');
+const nodecipher = require('node-cipher');
 
 let opts = nodecipher.encryptSync({
   input: 'config.json',
@@ -110,18 +110,18 @@ let opts = nodecipher.encryptSync({
 
 This method asynchronously decrypts the chosen input file using the [options][section_options] provided and then saves the decrypted content to the chosen output file.
 
-#### Parameters
-|  Parameter |    Type    | Description                             | Required |
+#### Arguments
+|       Name |    Type    | Description                             | Required |
 | ---------: | :--------: | :-------------------------------------- | :------: |
 |  `options` |  `Object`  | The options object. See [options][section_options]. | ✓ |
-| `callback` | `Function` | The function to call when the decryption has completed. ||
-|    `scope` |  `Object`  | The scope for the `callback` function parameter, if provided. ||
+| `callback` | `Function` | The function invoked when the decryption finishes. ||
+|    `scope` |  `Object`  | The scope for the `callback` function argument, if it is provided. ||
 
 #### Example
 The following example demonstrates decrypting the contents of `config.json.cast5` using `passw0rd` as the password, then saving the decrypted contents back to a file named `config.json`.
 
 ```js
-let nodecipher = require('node-cipher');
+const nodecipher = require('node-cipher');
 
 nodecipher.decrypt({
   input: 'config.json.cast5',
@@ -140,10 +140,10 @@ nodecipher.decrypt({
 
 **`decryptSync(options):Object`**
 
-This is the synchronous version of [`decrypt()`][method_decrypt]. This method does not accept the `callback` and `scope` parameters, as they are not necessary for synchronous code.
+This is the synchronous version of [`decrypt()`][method_decrypt]. This method does not accept the `callback` and `scope` arguments, as they are not necessary for synchronous code.
 
-#### Parameters
-| Parameter |   Type   | Description                                | Required |
+#### Arguments
+|      Name |   Type   | Description                                | Required |
 | --------: | :------: | :----------------------------------------- | :------: |
 | `options` | `Object` | The options object. See [options][section_options]. | ✓ |
 
@@ -151,7 +151,7 @@ This is the synchronous version of [`decrypt()`][method_decrypt]. This method do
 The following example demonstrates synchronously decrypting the contents of `config.json.cast5` using `passw0rd` as the password, then saving the decrypted contents back to a file named `config.json`.
 
 ```js
-let nodecipher = require('node-cipher');
+const nodecipher = require('node-cipher');
 
 let opts = nodecipher.decryptSync({
   input: 'config.json.cast5',
@@ -170,7 +170,7 @@ Returns an array with the names of the supported cipher algorithms for use by th
 
 #### Example
 ```js
-let nodecipher = require('node-cipher');
+const nodecipher = require('node-cipher');
 
 let algorithms = nodecipher.listAlgorithms();
 
@@ -187,7 +187,7 @@ Returns an array with the names of the supported hash algorithms for use by the 
 
 #### Example
 ```js
-let nodecipher = require('node-cipher');
+const nodecipher = require('node-cipher');
 
 let hashes = nodecipher.listHashes();
 
@@ -226,7 +226,7 @@ Examples
 1. Encrypts the contents of `config.json` using `passw0rd` as the password, then saves the decrypted contents to a file named `config.json.cast5`. This is the basic use case.
 
     ```js
-    let nodecipher = require('node-cipher');
+    const nodecipher = require('node-cipher');
 
     nodecipher.encrypt({
       input: 'config.json',
@@ -242,7 +242,7 @@ Examples
 2. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt, then saves the decrypted contents to a file named `config.json.cast5`.
 
     ```js
-    let nodecipher = require('node-cipher');
+    const nodecipher = require('node-cipher');
 
     nodecipher.encrypt({
       input: 'config.json',
@@ -259,7 +259,7 @@ Examples
 3. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt as a Buffer, then saves the decrypted contents to a file named `config.json.cast5`.
 
     ```js
-    let nodecipher = require('node-cipher');
+    const nodecipher = require('node-cipher');
 
     let saltBuffer = require('crypto').randomBytes(32);
 
@@ -278,7 +278,7 @@ Examples
 4. Encrypts the contents of `config.json` using `passw0rd` as the password and a custom salt, algorithm, digest, and byte length, then saves the decrypted contents to a file named `config.json.aes128`. This is an advanced use case.
 
     ```js
-    let nodecipher = require('node-cipher');
+    const nodecipher = require('node-cipher');
 
     nodecipher.encrypt({
       input: 'config.json',
@@ -298,7 +298,7 @@ Examples
 5. Synchronously decrypts the contents of `config.json.cast5` using `passw0rd` as the password and custom iterations, then saves the decrypted contents back to a file named `config.json`.
 
     ```js
-    let nodecipher = require('node-cipher');
+    const nodecipher = require('node-cipher');
 
     let opts = nodecipher.decryptsync({
       input: 'config.json.cast5',
