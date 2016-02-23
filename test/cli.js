@@ -543,7 +543,7 @@ describe('Commands', function () {
       exec(cmd, { silent: true }, function (code, output) {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
-        expect(output).to.contain('Bad decrypt');
+        expect(output).to.contain(nodecipher.errors.BAD_DECRYPT);
         expect(output).to.contain('password');
         done();
       });
@@ -559,7 +559,7 @@ describe('Commands', function () {
       exec(cmd, { silent: true }, function (code, output) {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
-        expect(output).to.contain('Bad decrypt');
+        expect(output).to.contain(nodecipher.errors.BAD_DECRYPT);
         expect(output).to.contain('salt');
         done();
       });
@@ -575,7 +575,7 @@ describe('Commands', function () {
       exec(cmd, { silent: true }, function (code, output) {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
-        expect(output).to.contain('Bad decrypt');
+        expect(output).to.contain(nodecipher.errors.BAD_DECRYPT);
         expect(output).to.contain('iterations');
         done();
       });
@@ -591,7 +591,7 @@ describe('Commands', function () {
       exec(cmd, { silent: true }, function (code, output) {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
-        expect(output).to.contain('Bad decrypt');
+        expect(output).to.contain(nodecipher.errors.BAD_DECRYPT);
         expect(output).to.contain('keylen');
         done();
       });
@@ -607,7 +607,7 @@ describe('Commands', function () {
       exec(cmd, { silent: true }, function (code, output) {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
-        expect(output).to.contain('Bad decrypt');
+        expect(output).to.contain(nodecipher.errors.BAD_DECRYPT);
         expect(output).to.contain('digest');
         done();
       });
@@ -623,7 +623,7 @@ describe('Commands', function () {
       exec(cmd, { silent: true }, function (code, output) {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
-        expect(output).to.contain('Bad decrypt');
+        expect(output).to.contain(nodecipher.errors.BAD_DECRYPT);
         expect(output).to.contain('algorithm');
         done();
       });
@@ -638,7 +638,7 @@ describe('Commands', function () {
       exec(cmd, { silent: true }, function (code, output) {
         expect(output).to.be.a('string');
         expect(output).to.have.length.above(0);
-        expect(output).to.contain('Error');
+        expect(output).to.contain(nodecipher.errors.BAD_FILE);
         expect(output).to.contain('does not exist');
         done();
       });

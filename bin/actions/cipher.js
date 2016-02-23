@@ -84,18 +84,21 @@ function cipher(command, input, output, options) {
  */
 function handleCipher(opts, err) {
   if (err) {
-    if (err.code === 'ENOENT') {
-      handleEnoentError(opts, err);
-    } else if (err.toString().indexOf('bad decrypt') >= 0) {
-      handleBadDecrypt(opts, err);
-    } else if (err.toString().indexOf('wrong final block length') >= 0) {
-      handleIncorrectAlgorithm(opts, err);
-    } else if (err.toString().indexOf('not a valid cipher algorithm') >= 0) {
-      handleInvalidAlgorithm(opts, err);
-    } else if (err.toString().indexOf('not a valid HMAC hash') >= 0) {
-      handleInvalidHash(opts, err);
-    } else {
-      handleUnknownErrors(opts, err);
+    switch (err.name) {
+      case nodecipher.errors.BAD_ALGORITHM:
+        handleInvalidAlgorithm(opts, err);
+        break;
+      case nodecipher.errors.BAD_DIGEST:
+        handleInvalidHash(opts, err);
+        break;
+      case nodecipher.errors.BAD_FILE:
+        handleEnoentError(opts, err);
+        break;
+      case nodecipher.errors.BAD_DECRYPT:
+        handleBadDecrypt(opts, err);
+        break;
+      default:
+        handleUnknownErrors(opts, err);
     }
   } else {
     handleCipherSuccess(opts, err);
@@ -110,7 +113,7 @@ function handleCipher(opts, err) {
  */
 function handleEnoentError(opts, err) {
   console.log(chalk.red(
-    '\nError: ' + err.path + ' does not exist\n'
+    '\nError: ' + err.name + '. "' + err.path + '" does not exist.\n'
   ));
 }
 
@@ -122,25 +125,14 @@ function handleEnoentError(opts, err) {
  */
 function handleBadDecrypt(opts, err) {
   console.log(chalk.red(
-    '\nBad decrypt. One or more of the following may be incorrect:\n\n' +
+    '\nError: ' + err.name + '. One or more of the following is likely ' +
+    'incorrect:\n\n' +
       '  - password\n' +
-      '  - vector\n' +
       '  - salt\n' +
+      '  - algorithm\n' +
       '  - iterations\n' +
       '  - keylen\n' +
       '  - digest\n'
-  ));
-}
-
-/**
- * Handles wrong final block length (wrong algorithm).
- *
- * @param {Object} opts
- * @param {Error} err
- */
-function handleIncorrectAlgorithm(opts, err) {
-  console.log(chalk.red(
-    '\nBad decrypt. Incorrect cipher algorithm\n'
   ));
 }
 
@@ -152,8 +144,9 @@ function handleIncorrectAlgorithm(opts, err) {
  */
 function handleInvalidAlgorithm(opts, err) {
   console.log(chalk.red(
-    '\n' + err + ' Use `nodecipher --algorithms` to see a list of valid ' +
-    'algorithms\n'));
+    '\nError: ' + err.name + '. Use `nodecipher --algorithms` to see a list ' +
+    'of valid algorithms.\n'
+  ));
 }
 
 /**
@@ -164,8 +157,9 @@ function handleInvalidAlgorithm(opts, err) {
  */
 function handleInvalidHash(opts, err) {
   console.log(chalk.red(
-    '\n' + err + ' Use `nodecipher --hashes` to see a list of valid HMAC ' +
-    'hashes\n'));
+    '\nError: ' + err.name + '. Use `nodecipher --hashes` to see a list of ' +
+    'valid digest hashes.\n'
+  ));
 }
 
 /**
@@ -175,7 +169,7 @@ function handleInvalidHash(opts, err) {
  * @param {Error} err
  */
 function handleUnknownErrors(opts, err) {
-  throw err;
+  console.log(chalk.red('\n' + err + '\n'));
 }
 
 /**
