@@ -1,6 +1,6 @@
 {
   "name": "node-cipher",
-  "version": "6.3.1",
+  "version": "6.3.2",
   "description": "Securely encrypt sensitive files for use in public source control.",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "debug": "^2.2.0",
     "fs-extra": "^0.26.4",
     "inquirer": "^0.11.2",
+    "keymirror": "^0.1.1",
     "lodash": "^4.0.0",
     "rc": "^1.1.6",
     "yargs": "^3.32.0"
