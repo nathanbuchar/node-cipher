@@ -100,6 +100,7 @@ function handleCipher(opts, err) {
       default:
         handleUnknownErrors(opts, err);
     }
+    exit(1);
   } else {
     handleCipherSuccess(opts, err);
   }
