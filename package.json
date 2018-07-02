@@ -1,6 +1,6 @@
 {
   "name": "node-cipher",
-  "version": "6.3.2",
+  "version": "6.3.3",
   "description": "Securely encrypt sensitive files for use in public source control.",
   "main": "index.js",
   "scripts": {
