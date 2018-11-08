@@ -132,6 +132,8 @@ Examples
 Tips
 ----
 
+### NPM
+
 Using NPM, you can create custom scripts in the `package.json` file to automate much of the encryption/decryption process.
 
 ```js
@@ -148,7 +150,9 @@ Simply run `$ npm run encrypt` or `$ npm run decrypt` to execute these commands.
 
 If you have installed `node-cipher` locally, NPM will automatically prefer the binary found in `node_modules/.bin` over a global binary. Read more about using local binaries within NPM [here][external_link_npm-scripts].
 
+### Webpack
 
+If you use webpack to process your files you can also use [decryption-loader][external_link_decryption-loader] to decrypt them.
 
 
 
@@ -167,3 +171,5 @@ If you have installed `node-cipher` locally, NPM will automatically prefer the b
 [external_package_inquirer]: https://npmjs.org/package/inquirer
 
 [external_link_npm-scripts]: http://firstdoit.com/npm-scripts/
+
+[external_link_decryption-loader]: https://www.npmjs.com/package/decryption-loader
