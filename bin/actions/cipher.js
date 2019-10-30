@@ -26,8 +26,8 @@ function prompForPassword(done) {
         return input.length > 0;
       }
     }
-  ], answers => {
-    done(answers.password);
+  ]).then(answers => {
+    done(answers.password)
   });
 }
 
